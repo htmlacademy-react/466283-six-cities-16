@@ -11,13 +11,12 @@ type CardsData = {
   nameLink: string;
   type: string;
 };
-type Cards = CardsData[];
-type CardsList = {
-  cards: Cards;
-};
-function Main({ cardsList }: CardsList): JSX.Element {
-  console.log(cardsList);
 
+type Cards = {
+  cardList: CardsData[];
+};
+
+function Main({ cardList }: Cards): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -129,9 +128,9 @@ function Main({ cardsList }: CardsList): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {/* {cardsList.map((card) => (
+                {cardList.map((card: CardsData) => (
                   <MainCard key={card.id} card={card} />
-                ))} */}
+                ))}
               </div>
             </section>
             <div className="cities__right-section">

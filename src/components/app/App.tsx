@@ -11,12 +11,15 @@ type CardsData = {
   nameLink: string;
   type: string;
 };
-type Cards = CardsData[];
 
-function App(cards: Cards): JSX.Element {
+type Cards = {
+  cards: CardsData[];
+};
+
+function App({ cards }: Cards): JSX.Element {
   return (
     <div>
-      <Main cardsList={cards} />
+      <Main cardList={cards} />
     </div>
   );
 }

@@ -11,16 +11,17 @@ type CardsData = {
 };
 
 type Cards = {
-  key?: number;
   card: CardsData;
 };
 
 function MainCard({ card }: Cards): JSX.Element {
   return (
     <article className="cities__card place-card">
-      <div className="place-card__mark">
-        {card.premium && <span>Premium</span>}
-      </div>
+      {card.premium && (
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      )}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href={card.link}>
           <img
