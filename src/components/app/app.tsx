@@ -1,4 +1,4 @@
-import Main from '../../pages/main/main1';
+import Main from '../../pages/main/main';
 
 type CardsData = {
   id: number;
