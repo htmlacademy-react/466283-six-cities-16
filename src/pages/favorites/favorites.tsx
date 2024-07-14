@@ -1,9 +1,8 @@
-import Header from '../../components/header/header';
-
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 function Favorites(): JSX.Element {
   return (
     <div className="page">
-      <Header />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
@@ -179,7 +178,7 @@ function Favorites(): JSX.Element {
         </div>
       </main>
       <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
+        <Link to={AppRoute.Root} className="footer__logo-link">
           <img
             className="footer__logo"
             src="img/logo.svg"
@@ -187,7 +186,7 @@ function Favorites(): JSX.Element {
             width="64"
             height="33"
           />
-        </a>
+        </Link>
       </footer>
     </div>
   );

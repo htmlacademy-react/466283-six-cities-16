@@ -1,6 +1,5 @@
 import MainCardsList from '../../components/main-cards-list/main-cards-list';
 import NavList from '../../components/nav-list/nav-list';
-import Header from '../../components/header/header';
 
 type CardsData = {
   id: number;
@@ -21,8 +20,6 @@ type Cards = {
 function Main({ cardList }: Cards): JSX.Element {
   return (
     <div className="page page--gray page--main">
-      <Header />
-
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
@@ -34,7 +31,9 @@ function Main({ cardList }: Cards): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">
+                {cardList.length} places to stay in Amsterdam
+              </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>

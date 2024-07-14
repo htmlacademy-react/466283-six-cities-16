@@ -1,5 +1,12 @@
 import Main from '../../pages/main/main';
-
+import Login from '../../pages/login/login';
+import Favorites from '../../pages/favorites/favorites';
+import Offer from '../../pages/offer/offer';
+import NotFound from '../../pages/not-found/not-found';
+import PrivateRoute from '../../components/private-route/private-route';
+import Layout from '../../components/layout/layout';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 type CardsData = {
   id: number;
   premium: boolean;
@@ -18,9 +25,24 @@ type Cards = {
 
 function App({ cards }: Cards): JSX.Element {
   return (
-    <div>
-      <Main cardList={cards} />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path={AppRoute.Root} element={<Layout />}>
+          <Route index element={<Main cardList={cards} />} />
+          <Route
+            path={AppRoute.Favorites}
+            element={
+              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+                <Favorites />
+              </PrivateRoute>
+            }
+          />
+          <Route path={AppRoute.Offer} element={<Offer />} />
+        </Route>
+        <Route path={AppRoute.Login} element={<Login />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
