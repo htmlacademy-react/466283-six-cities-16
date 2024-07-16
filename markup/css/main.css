@@ -1773,4 +1773,26 @@ img {
 .header__logo-link:not(.header__logo-link--active):hover {
   opacity: 0.5;
 }
+
+.page-not-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  color: grey;
+}
+
+.page-not-found__title {
+  font-size: 56px;
+  text-transform: uppercase;
+}
+
+.page-not-found__error {
+  font-size: 288px;
+}
+
+.page-not-found__link {
+  font-size: 26px;
+}
 /*# sourceMappingURL=main.css.map */
