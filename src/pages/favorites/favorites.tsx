@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 function Favorites(): JSX.Element {
   return (
-    <div className="page">
+    <>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
@@ -188,7 +188,7 @@ function Favorites(): JSX.Element {
           />
         </Link>
       </footer>
-    </div>
+    </>
   );
 }
 

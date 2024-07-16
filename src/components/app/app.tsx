@@ -29,17 +29,18 @@ function App({ cards }: Cards): JSX.Element {
       <Routes>
         <Route path={AppRoute.Root} element={<Layout />}>
           <Route index element={<Main cardList={cards} />} />
+          <Route path={AppRoute.Offer} element={<Offer />} />
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
                 <Favorites />
               </PrivateRoute>
             }
           />
-          <Route path={AppRoute.Offer} element={<Offer />} />
+          <Route path={AppRoute.Login} element={<Login />} />
         </Route>
-        <Route path={AppRoute.Login} element={<Login />} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
