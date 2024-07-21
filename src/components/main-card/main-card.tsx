@@ -1,45 +1,41 @@
-type CardsData = {
-  id: number;
-  premium: boolean;
-  link: string;
-  img: string;
-  price: number;
-  day: string;
-  name: string;
-  nameLink: string;
-  type: string;
+import { Offer } from '../../types/types-offers';
+import { Link } from 'react-router-dom';
+type OfferData = {
+  offer: Offer;
 };
 
-type Cards = {
-  card: CardsData;
-};
-
-function MainCard({ card }: Cards): JSX.Element {
+function MainCard({ offer }: OfferData): JSX.Element {
+  const bookmarkClass = offer.isFavorite
+    ? 'place-card__bookmark-button--active'
+    : '';
   return (
     <article className="cities__card place-card">
-      {card.premium && (
+      {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href={card.link}>
+        <Link to="/">
           <img
             className="place-card__image"
-            src={card.img}
+            src={offer.previewImage}
             width="260"
             height="200"
             alt="Place image"
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{card.price}</b>
+            <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button
+            className={`place-card__bookmark-button button ${bookmarkClass}`}
+            type="button"
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -53,9 +49,9 @@ function MainCard({ card }: Cards): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href={card.nameLink}>{card.name}</a>
+          <Link to="/">{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{card.type}</p>
+        <p className="place-card__type">{offer.type}</p>
       </div>
     </article>
   );

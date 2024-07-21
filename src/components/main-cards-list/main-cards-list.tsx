@@ -1,26 +1,14 @@
 import MainCard from '../main-card/main-card';
-
-type CardsData = {
-  id: number;
-  premium: boolean;
-  link: string;
-  img: string;
-  price: number;
-  day: string;
-  name: string;
-  nameLink: string;
-  type: string;
+import { Offer, Offers } from '../../types/types-offers';
+type OffersList = {
+  offers: Offers;
 };
 
-type Cards = {
-  cards: CardsData[];
-};
-
-function MainCardsList({ cards }: Cards): JSX.Element {
+function MainCardsList({ offers }: OffersList): JSX.Element {
   return (
     <>
-      {cards.map((card: CardsData) => (
-        <MainCard key={card.id} card={card} />
+      {offers.map((offer: Offer) => (
+        <MainCard key={offer.id} offer={offer} />
       ))}
     </>
   );

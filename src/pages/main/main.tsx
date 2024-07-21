@@ -1,23 +1,11 @@
 import MainCardsList from '../../components/main-cards-list/main-cards-list';
 import NavList from '../../components/nav-list/nav-list';
-
-type CardsData = {
-  id: number;
-  premium: boolean;
-  link: string;
-  img: string;
-  price: number;
-  day: string;
-  name: string;
-  nameLink: string;
-  type: string;
+import { Offers } from '../../types/types-offers';
+type OffersList = {
+  offers: Offers;
 };
 
-type Cards = {
-  cardList: CardsData[];
-};
-
-function Main({ cardList }: Cards): JSX.Element {
+function Main({ offers }: OffersList): JSX.Element {
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -31,7 +19,7 @@ function Main({ cardList }: Cards): JSX.Element {
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
             <b className="places__found">
-              {cardList.length} places to stay in Amsterdam
+              {offers.length} places to stay in Amsterdam
             </b>
             <form className="places__sorting" action="#" method="get">
               <span className="places__sorting-caption">Sort by</span>
@@ -60,7 +48,7 @@ function Main({ cardList }: Cards): JSX.Element {
               </ul>
             </form>
             <div className="cities__places-list places__list tabs__content">
-              <MainCardsList cards={cardList} />
+              <MainCardsList offers={offers} />
             </div>
           </section>
           <div className="cities__right-section">
