@@ -1,7 +1,7 @@
 import { Navigate, useParams } from 'react-router-dom';
 import { detailOffers } from '../../mocks/detail-offers';
 import { comments } from '../../mocks/comments';
-import { DetailOffer } from '../../types/types-offers';
+import { DetailOffer, DetailOffers } from '../../types/types-offers';
 import { Comments } from '../../types/types-comments';
 import { calcRaiting } from '../../utils/calc-raiting';
 import { getDataDetailOffer } from '../../utils/get-data-detail-offer';
@@ -15,9 +15,12 @@ import FormComment from '../../components/form-comment/form-comment';
 function Offer(): JSX.Element {
   const { id } = useParams();
 
-  const dataDetailOffer: DetailOffer = getDataDetailOffer(id, detailOffers);
+  const dataDetailOffer: DetailOffer | undefined = getDataDetailOffer(
+    id,
+    detailOffers
+  );
   const acriveClassAcc: string = dataDetailOffer?.host.isPro ? PRO_ACC : '';
-  const dataComments: Comments = getDataComments(id, comments);
+  const dataComments: Comments | undefined = getDataComments(id, comments);
 
   if (!dataDetailOffer) {
     return <Navigate to={AppRoute.NotFound} replace />;
