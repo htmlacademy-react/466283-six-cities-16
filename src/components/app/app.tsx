@@ -23,14 +23,13 @@ function App({ offers }: OffersList): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-                <Favorites />
+                <Favorites favoriteOffers={offers} />
               </PrivateRoute>
             }
           />
           <Route path={AppRoute.Login} element={<Login />} />
+          <Route path={AppRoute.NotFound} element={<NotFound />} />
         </Route>
-
-        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

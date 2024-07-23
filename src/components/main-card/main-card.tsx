@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import { Offer } from '../../types/types-offers';
 import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { setLetterUpper } from '../../utils/set-letter-upper';
 type OfferData = {
   offer: Offer;
 };
@@ -8,15 +11,30 @@ function MainCard({ offer }: OfferData): JSX.Element {
   const bookmarkClass = offer.isFavorite
     ? 'place-card__bookmark-button--active'
     : '';
+
+  const [card, setCard] = useState({});
+  const inCard = () => {
+    setCard(offer);
+  };
+  const outCard = () => {
+    setCard({});
+  };
+  // eslint-disable-next-line no-console
+  console.log(card);
+
   return (
-    <article className="cities__card place-card">
+    <article
+      className="cities__card place-card"
+      onMouseEnter={inCard}
+      onMouseLeave={outCard}
+    >
       {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to="/">
+        <Link to={AppRoute.Offer.replace(':id', `${offer.id}`)}>
           <img
             className="place-card__image"
             src={offer.previewImage}
@@ -49,9 +67,11 @@ function MainCard({ offer }: OfferData): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to="/">{offer.title}</Link>
+          <Link to={AppRoute.Offer.replace(':id', `${offer.id}`)}>
+            {offer.title}
+          </Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{setLetterUpper(offer.type)}</p>
       </div>
     </article>
   );
