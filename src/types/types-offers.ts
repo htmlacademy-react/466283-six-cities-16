@@ -3,7 +3,7 @@ export type Offer = {
   title: string;
   type: string;
   price: number;
-  city?: {
+  city: {
     name: string;
     location: {
       latitude: number;
