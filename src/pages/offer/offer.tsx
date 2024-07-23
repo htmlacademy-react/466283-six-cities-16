@@ -1,7 +1,7 @@
 import { Navigate, useParams } from 'react-router-dom';
 import { detailOffers } from '../../mocks/detail-offers';
 import { comments } from '../../mocks/comments';
-import { DetailOffer, DetailOffers } from '../../types/types-offers';
+import { DetailOffer } from '../../types/types-offers';
 import { Comments } from '../../types/types-comments';
 import { calcRaiting } from '../../utils/calc-raiting';
 import { getDataDetailOffer } from '../../utils/get-data-detail-offer';
