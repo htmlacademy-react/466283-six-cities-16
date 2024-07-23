@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { AppRoute } from '../const';
-export function PageWrapperClass(): string {
+export const PageWrapperClass = (): string => {
   const location = useLocation();
   let wrapperClass: string = '';
   switch (location?.pathname) {
@@ -12,4 +12,4 @@ export function PageWrapperClass(): string {
       break;
   }
   return wrapperClass;
-}
+};

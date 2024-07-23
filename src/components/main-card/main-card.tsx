@@ -1,45 +1,59 @@
-type CardsData = {
-  id: number;
-  premium: boolean;
-  link: string;
-  img: string;
-  price: number;
-  day: string;
-  name: string;
-  nameLink: string;
-  type: string;
+import { useState } from 'react';
+import { Offer } from '../../types/types-offers';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { setLetterUpper } from '../../utils/set-letter-upper';
+type OfferData = {
+  offer: Offer;
 };
 
-type Cards = {
-  card: CardsData;
-};
+function MainCard({ offer }: OfferData): JSX.Element {
+  const bookmarkClass = offer.isFavorite
+    ? 'place-card__bookmark-button--active'
+    : '';
 
-function MainCard({ card }: Cards): JSX.Element {
+  const [card, setCard] = useState({});
+  const inCard = () => {
+    setCard(offer);
+  };
+  const outCard = () => {
+    setCard({});
+  };
+  // eslint-disable-next-line no-console
+  console.log(card);
+
   return (
-    <article className="cities__card place-card">
-      {card.premium && (
+    <article
+      className="cities__card place-card"
+      onMouseEnter={inCard}
+      onMouseLeave={outCard}
+    >
+      {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href={card.link}>
+        <Link to={AppRoute.Offer.replace(':id', `${offer.id}`)}>
           <img
             className="place-card__image"
-            src={card.img}
+            src={offer.previewImage}
             width="260"
             height="200"
             alt="Place image"
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{card.price}</b>
+            <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button
+            className={`place-card__bookmark-button button ${bookmarkClass}`}
+            type="button"
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -53,9 +67,11 @@ function MainCard({ card }: Cards): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href={card.nameLink}>{card.name}</a>
+          <Link to={AppRoute.Offer.replace(':id', `${offer.id}`)}>
+            {offer.title}
+          </Link>
         </h2>
-        <p className="place-card__type">{card.type}</p>
+        <p className="place-card__type">{setLetterUpper(offer.type)}</p>
       </div>
     </article>
   );
