@@ -1,5 +1,7 @@
 import MainCardsList from '../../components/main-cards-list/main-cards-list';
 import NavList from '../../components/nav-list/nav-list';
+import MapComponent from '../../components/map-component/map-component';
+import { CITY } from '../../const';
 import { Offers } from '../../types/types-offers';
 type OffersList = {
   offers: Offers;
@@ -52,7 +54,7 @@ function Main({ offers }: OffersList): JSX.Element {
             </div>
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map"></section>
+            <MapComponent city={CITY} />
           </div>
         </div>
       </div>
