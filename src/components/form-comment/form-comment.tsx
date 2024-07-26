@@ -1,6 +1,8 @@
 import { useState } from 'react';
 function FormComment(): JSX.Element {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [rating, setRating] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [comment, setComment] = useState('');
 
   const getComment = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
