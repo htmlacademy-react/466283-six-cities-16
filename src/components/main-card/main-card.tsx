@@ -4,7 +4,7 @@ import { AppRoute } from '../../const';
 import { setLetterUpper } from '../../utils/set-letter-upper';
 type OffersList = {
   offer: Offer;
-  onHover?: () => void;
+  onHover?: (newOffer: Offer | null) => void;
 };
 
 function MainCard({ offer, onHover }: OffersList): JSX.Element {

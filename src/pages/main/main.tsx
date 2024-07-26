@@ -9,9 +9,9 @@ type OffersList = {
 };
 
 function Main({ offers }: OffersList): JSX.Element {
-  const [selectedOffer, setSelectedOffer] = useState({});
+  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
 
-  const handleHover = (newOffer) => {
+  const handleHover = (newOffer: Offer | null) => {
     setSelectedOffer(newOffer);
   };
   return (

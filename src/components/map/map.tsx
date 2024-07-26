@@ -2,9 +2,23 @@ import { useRef, useEffect } from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
+import { Offer, Offers } from '../../types/types-offers';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const';
 
-function Map({ city, points, selectedOffer }) {
+type City = {
+  latitude: number;
+  longitude: number;
+  name: string;
+  zoom: number;
+};
+
+type MapProps = {
+  city: City;
+  points: Offers;
+  selectedOffer: Offer | null;
+};
+
+function Map({ city, points, selectedOffer }: MapProps) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -31,7 +45,7 @@ function Map({ city, points, selectedOffer }) {
             },
             {
               icon:
-                point.id === selectedOffer.id
+                point.id === selectedOffer?.id
                   ? currentCustomIcon
                   : defaultCustomIcon,
             }

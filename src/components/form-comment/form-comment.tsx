@@ -11,9 +11,6 @@ function FormComment(): JSX.Element {
       setRating(Number(event.target.value));
     }
   };
-
-  // eslint-disable-next-line no-console
-  console.log('Рейтинг:', rating, 'Текст:', comment);
   return (
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">
