@@ -4,13 +4,13 @@ import { AppRoute } from '../../const';
 import { setLetterUpper } from '../../utils/set-letter-upper';
 type OffersList = {
   offer: Offer;
+  onHover?: () => void;
 };
 
-function MainCard({ offer }: OffersList, { onHover }): JSX.Element {
-  const handleHover = (offer: Offer) => {
+function MainCard({ offer, onHover }: OffersList): JSX.Element {
+  const handleHover = (newOffer: Offer | null) => {
     if (onHover) {
-      onHover(offer);
-      console.log(offer);
+      onHover(newOffer);
     }
   };
 
@@ -18,6 +18,7 @@ function MainCard({ offer }: OffersList, { onHover }): JSX.Element {
     <article
       className="cities__card place-card"
       onMouseEnter={() => handleHover(offer)}
+      onMouseLeave={() => handleHover(null)}
     >
       {offer.isPremium && (
         <div className="place-card__mark">
@@ -42,7 +43,7 @@ function MainCard({ offer }: OffersList, { onHover }): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={`place-card__bookmark-button button`}
+            className={'place-card__bookmark-button button'}
             type="button"
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">

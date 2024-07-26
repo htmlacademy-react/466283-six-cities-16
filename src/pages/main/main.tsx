@@ -13,7 +13,6 @@ function Main({ offers }: OffersList): JSX.Element {
 
   const handleHover = (newOffer) => {
     setSelectedOffer(newOffer);
-    console.log(newOffer);
   };
   return (
     <main className="page__main page__main--index">
@@ -64,7 +63,11 @@ function Main({ offers }: OffersList): JSX.Element {
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
-              <Map city={CITIES.Amsterdam} points={offers} />
+              <Map
+                city={CITIES.Amsterdam}
+                points={offers}
+                selectedOffer={selectedOffer}
+              />
             </section>
           </div>
         </div>
