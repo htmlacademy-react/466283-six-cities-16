@@ -24,7 +24,7 @@ export const offersList = [
   },
   {
     id: 'ff7734de-8e30-4f03-9ccd-3e7bffa117b1',
-    title: 'The house among olive ',
+    title: 'The house among olive',
     type: 'house',
     price: 968,
     previewImage: 'https://16.design.htmlacademy.pro/static/hotel/8.jpg',

@@ -1,32 +1,23 @@
-import { useState } from 'react';
 import { Offer } from '../../types/types-offers';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { setLetterUpper } from '../../utils/set-letter-upper';
-type OfferData = {
+type OffersList = {
   offer: Offer;
 };
 
-function MainCard({ offer }: OfferData): JSX.Element {
-  const bookmarkClass = offer.isFavorite
-    ? 'place-card__bookmark-button--active'
-    : '';
-
-  const [card, setCard] = useState({});
-  const inCard = () => {
-    setCard(offer);
+function MainCard({ offer }: OffersList, { onHover }): JSX.Element {
+  const handleHover = (offer: Offer) => {
+    if (onHover) {
+      onHover(offer);
+      console.log(offer);
+    }
   };
-  const outCard = () => {
-    setCard({});
-  };
-  // eslint-disable-next-line no-console
-  console.log(card);
 
   return (
     <article
       className="cities__card place-card"
-      onMouseEnter={inCard}
-      onMouseLeave={outCard}
+      onMouseEnter={() => handleHover(offer)}
     >
       {offer.isPremium && (
         <div className="place-card__mark">
@@ -51,7 +42,7 @@ function MainCard({ offer }: OfferData): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={`place-card__bookmark-button button ${bookmarkClass}`}
+            className={`place-card__bookmark-button button`}
             type="button"
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">

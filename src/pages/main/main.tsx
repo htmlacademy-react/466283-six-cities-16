@@ -1,13 +1,20 @@
-import MainCardsList from '../../components/main-cards-list/main-cards-list';
+import MainCard from '../../components/main-card/main-card';
 import NavList from '../../components/nav-list/nav-list';
-import MapComponent from '../../components/map-component/map-component';
-import { CITY } from '../../const';
-import { Offers } from '../../types/types-offers';
+import Map from '../../components/map/map';
+import { CITIES } from '../../const';
+import { Offers, Offer } from '../../types/types-offers';
+import { useState } from 'react';
 type OffersList = {
   offers: Offers;
 };
 
 function Main({ offers }: OffersList): JSX.Element {
+  const [selectedOffer, setSelectedOffer] = useState({});
+
+  const handleHover = (newOffer) => {
+    setSelectedOffer(newOffer);
+    console.log(newOffer);
+  };
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -50,11 +57,15 @@ function Main({ offers }: OffersList): JSX.Element {
               </ul>
             </form>
             <div className="cities__places-list places__list tabs__content">
-              <MainCardsList offers={offers} />
+              {offers.map((offer: Offer) => (
+                <MainCard offer={offer} key={offer.id} onHover={handleHover} />
+              ))}
             </div>
           </section>
           <div className="cities__right-section">
-            <MapComponent city={CITY} />
+            <section className="cities__map map">
+              <Map city={CITIES.Amsterdam} points={offers} />
+            </section>
           </div>
         </div>
       </div>
