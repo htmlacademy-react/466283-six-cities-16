@@ -11,7 +11,7 @@ export type Offer = {
       zoom: number;
     };
   };
-  location?: {
+  location: {
     latitude: number;
     longitude: number;
     zoom: number;
