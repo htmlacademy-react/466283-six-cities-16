@@ -15,7 +15,7 @@ type City = {
 type MapProps = {
   city: City;
   points: Offers;
-  selectedOffer: Offer | null;
+  selectedOffer?: Offer | null;
 };
 const defaultCustomIcon = leaflet.icon({
   iconUrl: URL_MARKER_DEFAULT,
