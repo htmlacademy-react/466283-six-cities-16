@@ -37,7 +37,7 @@ type Cities = {
     zoom: number;
   };
 };
-
+export const DEFAULT_CITY = 'Paris';
 export const CITIES: Cities = {
   Paris: {
     name: 'Paris',

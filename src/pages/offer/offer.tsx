@@ -9,17 +9,17 @@ import { getDataComments } from '../../utils/get-data-comments';
 import { getDate } from '../../utils/get-date';
 import { setLetterUpper } from '../../utils/set-letter-upper';
 import { getCountDataOffer } from '../../utils/get-count-data-offer';
-import { PRO_ACC, AppRoute, CITIES } from '../../const';
+import { PRO_ACC, AppRoute } from '../../const';
 import FormComment from '../../components/form-comment/form-comment';
 import NearOffer from '../../components/near-offer/near-offer';
 import { nearOffers } from '../../mocks/near-offer';
 import { NearOffers } from '../../types/near-offers';
 import { getDataNearOffers } from '../../utils/get-data-near-offers';
 import Map from '../../components/map/map';
+import { City } from '../../types/cities';
 
 function Offer(): JSX.Element {
   const { id } = useParams();
-
   const dataDetailOffer: DetailOffer | undefined = getDataDetailOffer(
     id,
     detailOffers
@@ -173,7 +173,10 @@ function Offer(): JSX.Element {
           </div>
         </div>
         <section className="offer__map map">
-          <Map city={CITIES.Amsterdam} points={dataNearOffers} />
+          <Map
+            city={dataDetailOffer.city.location as City}
+            points={dataNearOffers}
+          />
         </section>
       </section>
       <div className="container">
