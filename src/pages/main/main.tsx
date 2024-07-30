@@ -5,6 +5,8 @@ import { CITIES, DEFAULT_CITY } from '../../const';
 import { Offers, Offer } from '../../types/types-offers';
 import { useState } from 'react';
 import MainEmpty from '../main-empty/main-empty';
+import { useAppDispatch } from '../../hooks';
+import { offerListAction } from '../../store/actions';
 type OffersList = {
   offers: Offers;
 };
@@ -12,7 +14,9 @@ type OffersList = {
 function Main({ offers }: OffersList): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
   const [city, setCity] = useState(DEFAULT_CITY);
+  const dispatch = useAppDispatch();
   const cityOffers = offers.filter((offer) => offer.city.name === city);
+  dispatch(offerListAction(cityOffers));
   const isEmptyOffers = cityOffers.length ? '' : 'page__main--index-empty';
   const handleHover = (newOffer: Offer | null) => {
     setSelectedOffer(newOffer);
