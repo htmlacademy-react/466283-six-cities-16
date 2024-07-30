@@ -4,18 +4,12 @@ import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
 import { Offer, Offers } from '../../types/types-offers';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const';
-
-type City = {
-  latitude: number;
-  longitude: number;
-  name: string;
-  zoom: number;
-};
+import { City } from '../../types/cities';
 
 type MapProps = {
   city: City;
   points: Offers;
-  selectedOffer: Offer | null;
+  selectedOffer?: Offer | null;
 };
 const defaultCustomIcon = leaflet.icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -35,6 +29,11 @@ function Map({ city, points, selectedOffer }: MapProps) {
 
   useEffect(() => {
     if (map) {
+      const { latitude: lat, longitude: lng, zoom } = city;
+      map.setView([lat, lng], zoom);
+
+      const markerLayer = leaflet.layerGroup().addTo(map);
+      markerLayer.clearLayers();
       points.forEach((point) => {
         leaflet
           .marker(
@@ -52,7 +51,7 @@ function Map({ city, points, selectedOffer }: MapProps) {
           .addTo(map);
       });
     }
-  }, [map, points, selectedOffer]);
+  }, [map, points, selectedOffer, city]);
 
   return <div style={{ height: '100%' }} ref={mapRef}></div>;
 }
