@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { CityName } from '../../types/cities';
+import { useAppDispatch } from '../../hooks';
+import { cityAction } from '../../store/actions';
 
 interface CityLinkProps {
   city: CityName;
@@ -13,7 +15,11 @@ function NavItem({
   isActive = false,
   onCityChange,
 }: CityLinkProps): JSX.Element {
-  const handleClick = () => onCityChange?.(city);
+  const dispatch = useAppDispatch();
+  const handleClick = () => {
+    dispatch(cityAction(city));
+    onCityChange?.(city);
+  };
 
   return (
     <Link

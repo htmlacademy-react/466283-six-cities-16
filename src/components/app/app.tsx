@@ -7,23 +7,19 @@ import PrivateRoute from '../../components/private-route/private-route';
 import Layout from '../../components/layout/layout';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Offers } from '../../types/types-offers';
-type OffersList = {
-  offers: Offers;
-};
 
-function App({ offers }: OffersList): JSX.Element {
+function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Root} element={<Layout />}>
-          <Route index element={<Main offers={offers} />} />
+          <Route index element={<Main />} />
           <Route path={AppRoute.Offer} element={<Offer />} />
           <Route
             path={AppRoute.Favorites}
             element={
               <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-                <Favorites favoriteOffers={offers} />
+                <Favorites />
               </PrivateRoute>
             }
           />

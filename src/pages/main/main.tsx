@@ -1,17 +1,17 @@
 import MainCard from '../../components/main-card/main-card';
 import NavList from '../../components/nav-list/nav-list';
 import Map from '../../components/map/map';
-import { CITIES, DEFAULT_CITY } from '../../const';
+import { CITIES } from '../../const';
 import { Offers, Offer } from '../../types/types-offers';
 import { useState } from 'react';
 import MainEmpty from '../main-empty/main-empty';
-type OffersList = {
-  offers: Offers;
-};
+import { useAppSelector } from '../../hooks';
 
-function Main({ offers }: OffersList): JSX.Element {
+function Main(): JSX.Element {
+  const selectedCity: string = useAppSelector((state) => state.city);
+  const offers: Offers = useAppSelector((state) => state.offersList);
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
-  const [city, setCity] = useState(DEFAULT_CITY);
+  const [city, setCity] = useState(selectedCity);
   const cityOffers = offers.filter((offer) => offer.city.name === city);
   const isEmptyOffers = cityOffers.length ? '' : 'page__main--index-empty';
   const handleHover = (newOffer: Offer | null) => {
@@ -26,7 +26,7 @@ function Main({ offers }: OffersList): JSX.Element {
 
       <div className="cities">
         {!cityOffers.length ? (
-          <MainEmpty />
+          <MainEmpty city={city} />
         ) : (
           <div className="cities__places-container container">
             <section className="cities__places places">
