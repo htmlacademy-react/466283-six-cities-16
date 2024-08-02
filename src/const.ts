@@ -92,3 +92,24 @@ export enum UrlMapMarker {
   Default = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg',
   Active = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg',
 }
+
+import { PlacesOption } from './types/sorting-options';
+
+export const sortOptions: Record<string, PlacesOption> = {
+  popular: {
+    name: 'Popular',
+    sort: () => 0,
+  },
+  lowToHeight: {
+    name: 'Price: low to hight',
+    sort: (a, b) => a.price - b.price,
+  },
+  hightToLow: {
+    name: 'Price: hight to low',
+    sort: (a, b) => b.price - a.price,
+  },
+  topRated: {
+    name: 'Top rated first',
+    sort: (a, b) => b.rating - a.rating,
+  },
+};

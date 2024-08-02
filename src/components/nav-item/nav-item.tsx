@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { CityName } from '../../types/cities';
 import { useAppDispatch } from '../../hooks';
-import { cityAction } from '../../store/actions';
+import { cityAction, resetTypeAction } from '../../store/actions';
 
 interface CityLinkProps {
   city: CityName;
@@ -19,6 +19,7 @@ function NavItem({
   const handleClick = () => {
     dispatch(cityAction(city));
     onCityChange?.(city);
+    dispatch(resetTypeAction());
   };
 
   return (
