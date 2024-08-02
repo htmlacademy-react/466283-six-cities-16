@@ -7,7 +7,6 @@ import { PlacesSortType } from '../../types/sorting-options';
 function SortingOptions(): JSX.Element {
   const sortType = useAppSelector((state) => state.sortType);
   const dispatch = useAppDispatch();
-  //places__option--active - active class
   const [isOpen, setIsOpen] = useState(false);
   const activeClass = isOpen ? 'places__options--opened' : '';
   const a = (key: PlacesSortType) => {

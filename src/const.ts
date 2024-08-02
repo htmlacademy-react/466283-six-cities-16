@@ -77,11 +77,9 @@ export const CITIES: Cities = {
   },
 };
 
-export const URL_MARKER_DEFAULT: string =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
+export const URL_MARKER_DEFAULT: string = '../img/pin.svg';
 
-export const URL_MARKER_CURRENT: string =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
+export const URL_MARKER_CURRENT: string = '../img/pin-active.svg';
 
 export enum MapLayer {
   Template = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
@@ -89,8 +87,8 @@ export enum MapLayer {
 }
 
 export enum UrlMapMarker {
-  Default = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg',
-  Active = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg',
+  Default = '../img/pin.svg',
+  Active = '../img/pin-active.svg',
 }
 
 import { PlacesOption } from './types/sorting-options';
