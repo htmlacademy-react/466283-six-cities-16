@@ -1,11 +1,10 @@
+import { useAppSelector } from '../../hooks';
 import { Offers } from '../../types/types-offers';
 import { getOffersByCity } from '../../utils/get-offers-by-city';
 import FavoriteItem from '../favorite-item/favorite-item';
-type OffersList = {
-  favoriteOffers: Offers;
-};
 
-function FavoritesList({ favoriteOffers }: OffersList): JSX.Element {
+function FavoritesList(): JSX.Element {
+  const favoriteOffers: Offers = useAppSelector((state) => state.offersList);
   const favoritesCards = getOffersByCity(favoriteOffers);
 
   return (
