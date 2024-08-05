@@ -232,7 +232,7 @@ function OfferNotLogged(): JSX.Element {
                       </span>
                     </div>
                     <button
-                      className="place-card__bookmark-button place-card__bookmark-button--active button"
+                      className="place-card__bookmark-button place-card__bookmark-button--active  button"
                       type="button"
                     >
                       <svg
