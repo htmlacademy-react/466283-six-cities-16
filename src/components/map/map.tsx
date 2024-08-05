@@ -13,14 +13,14 @@ type MapProps = {
 };
 const defaultCustomIcon = leaflet.icon({
   iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [29, 37],
+  iconAnchor: [13, 39],
 });
 
 const currentCustomIcon = leaflet.icon({
   iconUrl: URL_MARKER_CURRENT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [29, 37],
+  iconAnchor: [13, 39],
 });
 
 function Map({ city, points, selectedOffer }: MapProps) {
