@@ -7,8 +7,17 @@ import PrivateRoute from '../../components/private-route/private-route';
 import Layout from '../../components/layout/layout';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
+import Loader from '../loader/loader';
 
 function App(): JSX.Element {
+  const isOffersListLoading = useAppSelector(
+    (state) => state.isOffersListLoading
+  );
+
+  if (isOffersListLoading) {
+    return <Loader />;
+  }
   return (
     <BrowserRouter>
       <Routes>

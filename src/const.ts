@@ -111,3 +111,11 @@ export const sortOptions: Record<string, PlacesOption> = {
     sort: (a, b) => b.rating - a.rating,
   },
 };
+
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+  Favorite = '/favorite',
+  Comments = '/comments',
+}
