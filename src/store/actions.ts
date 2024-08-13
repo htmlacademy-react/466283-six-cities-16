@@ -17,6 +17,12 @@ export const sortTypeAction = createAction('sortType', (value: string) => ({
 export const resetTypeAction = createAction('resetType', () => ({
   payload: 'popular',
 }));
-export const requareAuthorizationAction = createAction<AuthorizationStatus>(
-  'requareAuthorization'
+
+export const requireAuthorizationAction = createAction(
+  'requareAuthorization',
+  (value: AuthorizationStatus) => ({ payload: value })
 );
+
+export const setError = createAction('setError', (value: null | string) => ({
+  payload: value,
+}));

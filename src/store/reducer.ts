@@ -4,8 +4,9 @@ import {
   offerListAction,
   sortTypeAction,
   resetTypeAction,
-  requareAuthorizationAction,
+  requireAuthorizationAction,
   setOfferListAction,
+  setError,
 } from './actions';
 import { AuthorizationStatus, DEFAULT_CITY } from '../const';
 import { Offers } from '../types/types-offers';
@@ -16,6 +17,7 @@ type InitialState = {
   sortType: string;
   authorizationStatus: string;
   isOffersListLoading: boolean;
+  error: string | null;
 };
 
 const initialState: InitialState = {
@@ -24,6 +26,7 @@ const initialState: InitialState = {
   sortType: 'popular',
   authorizationStatus: AuthorizationStatus.Unknown,
   isOffersListLoading: false,
+  error: null,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -37,13 +40,19 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setOfferListAction, (state, action: PayloadAction<boolean>) => {
       state.isOffersListLoading = action.payload;
     })
-    .addCase(sortTypeAction, (state, action) => {
+    .addCase(sortTypeAction, (state, action: PayloadAction<string>) => {
       state.sortType = action.payload;
     })
-    .addCase(resetTypeAction, (state, action) => {
+    .addCase(resetTypeAction, (state, action: PayloadAction<string>) => {
       state.sortType = action.payload;
     })
-    .addCase(requareAuthorizationAction, (state, action) => {
-      state.authorizationStatus = action.payload;
+    .addCase(
+      requireAuthorizationAction,
+      (state, action: PayloadAction<string>) => {
+        state.authorizationStatus = action.payload;
+      }
+    )
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
     });
 });
