@@ -19,7 +19,7 @@ export const resetTypeAction = createAction('resetType', () => ({
 }));
 
 export const requireAuthorizationAction = createAction(
-  'requareAuthorization',
+  'requireAuthorizationAction',
   (value: AuthorizationStatus) => ({ payload: value })
 );
 

@@ -1,10 +1,38 @@
+import { useRef } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { logIn } from '../../store/api-actions';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+
 function Login(): JSX.Element {
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+
+  const dispatch = useAppDispatch();
+
+  const handleFormSubmit = (evt: React.SyntheticEvent) => {
+    evt.preventDefault();
+    if (emailRef.current !== null && passwordRef.current !== null) {
+      dispatch(
+        logIn({
+          login: emailRef.current.value,
+          password: passwordRef.current.value,
+        })
+      );
+    }
+  };
+
   return (
     <main className="page__main page__main--login">
       <div className="page__login-container container">
         <section className="login">
           <h1 className="login__title">Sign in</h1>
-          <form className="login__form form" action="#" method="post">
+          <form
+            className="login__form form"
+            action="#"
+            method="post"
+            onSubmit={handleFormSubmit}
+          >
             <div className="login__input-wrapper form__input-wrapper">
               <label className="visually-hidden">E-mail</label>
               <input
@@ -13,6 +41,7 @@ function Login(): JSX.Element {
                 name="email"
                 placeholder="Email"
                 required
+                ref={emailRef}
               />
             </div>
             <div className="login__input-wrapper form__input-wrapper">
@@ -23,6 +52,7 @@ function Login(): JSX.Element {
                 name="password"
                 placeholder="Password"
                 required
+                ref={passwordRef}
               />
             </div>
             <button className="login__submit form__submit button" type="submit">
@@ -32,9 +62,9 @@ function Login(): JSX.Element {
         </section>
         <section className="locations locations--login locations--current">
           <div className="locations__item">
-            <a className="locations__item-link" href="#">
+            <Link className="locations__item-link" to={AppRoute.Root}>
               <span>Amsterdam</span>
-            </a>
+            </Link>
           </div>
         </section>
       </div>

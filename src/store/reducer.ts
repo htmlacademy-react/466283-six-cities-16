@@ -46,12 +46,9 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(resetTypeAction, (state, action: PayloadAction<string>) => {
       state.sortType = action.payload;
     })
-    .addCase(
-      requireAuthorizationAction,
-      (state, action: PayloadAction<string>) => {
-        state.authorizationStatus = action.payload;
-      }
-    )
+    .addCase(requireAuthorizationAction, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
     });
