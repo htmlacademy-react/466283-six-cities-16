@@ -1,5 +1,4 @@
 import { Navigate, useParams } from 'react-router-dom';
-import { detailOffers } from '../../mocks/detail-offers';
 import { comments } from '../../mocks/comments';
 import { DetailOffer } from '../../types/types-offers';
 import { Comments } from '../../types/types-comments';
@@ -17,19 +16,28 @@ import { NearOffers } from '../../types/near-offers';
 import { getDataNearOffers } from '../../utils/get-data-near-offers';
 import Map from '../../components/map/map';
 import { City } from '../../types/cities';
+import { useAppSelector } from '../../hooks';
+import Loader from '../../components/loader/loader';
 
 function Offer(): JSX.Element {
-  const { id } = useParams();
-  const dataDetailOffer: DetailOffer | undefined = getDataDetailOffer(
-    id,
-    detailOffers
+  const dataDetailOffer: DetailOffer | null = useAppSelector(
+    (state) => state.offerDetail
   );
-  const dataNearOffers: NearOffers | undefined = getDataNearOffers(
-    id,
-    nearOffers
+  const isOfferDetailAction = useAppSelector(
+    (state) => state.isOfferDetailAction
   );
+
+  if (isOfferDetailAction) {
+    return <Loader />;
+  }
+
+  // const dataNearOffers: NearOffers | undefined = getDataNearOffers(
+  //   id,
+  //   nearOffers
+  // );
+
+  const dataNearOffers = [];
   const acriveClassAcc: string = dataDetailOffer?.host.isPro ? PRO_ACC : '';
-  const dataComments: Comments | undefined = getDataComments(id, comments);
 
   if (!dataDetailOffer) {
     return <Navigate to={AppRoute.NotFound} replace />;
@@ -39,7 +47,7 @@ function Offer(): JSX.Element {
       <section className="offer">
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
-            {dataDetailOffer.images.map((img: string) => (
+            {dataDetailOffer?.images.map((img: string) => (
               <div key={img} className="offer__image-wrapper">
                 <img className="offer__image" src={img} alt="Photo studio" />
               </div>
@@ -48,13 +56,13 @@ function Offer(): JSX.Element {
         </div>
         <div className="offer__container container">
           <div className="offer__wrapper">
-            {dataDetailOffer.isPremium && (
+            {dataDetailOffer?.isPremium && (
               <div className="offer__mark">
                 <span>Premium</span>
               </div>
             )}
             <div className="offer__name-wrapper">
-              <h1 className="offer__name">{dataDetailOffer.title}</h1>
+              <h1 className="offer__name">{dataDetailOffer?.title}</h1>
               <button className="offer__bookmark-button button" type="button">
                 <svg className="offer__bookmark-icon" width="31" height="33">
                   <use xlinkHref="#icon-bookmark"></use>
@@ -70,7 +78,7 @@ function Offer(): JSX.Element {
                 <span className="visually-hidden">Rating</span>
               </div>
               <span className="offer__rating-value rating__value">
-                {dataDetailOffer.rating}
+                {dataDetailOffer?.rating}
               </span>
             </div>
             <ul className="offer__features">
@@ -125,7 +133,7 @@ function Offer(): JSX.Element {
                 <p className="offer__text">{dataDetailOffer.description}</p>
               </div>
             </div>
-            {dataComments.length && (
+            {/* {dataComments.length && (
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">
                   Reviews &middot;{' '}
@@ -169,7 +177,7 @@ function Offer(): JSX.Element {
                 </ul>
                 <FormComment />
               </section>
-            )}
+            )} */}
           </div>
         </div>
         <section className="offer__map map">
@@ -185,9 +193,9 @@ function Offer(): JSX.Element {
             Other places in the neighbourhood
           </h2>
           <div className="near-places__list places__list">
-            {dataNearOffers.slice(0, 3).map((nearOffer) => (
+            {/* {dataNearOffers.slice(0, 3).map((nearOffer) => (
               <NearOffer key={nearOffer.id} nearOffer={nearOffer} />
-            ))}
+            ))} */}
           </div>
         </section>
       </div>

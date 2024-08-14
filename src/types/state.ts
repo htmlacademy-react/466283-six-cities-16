@@ -14,3 +14,5 @@ export type UserData = {
   email: string;
   token: string;
 };
+
+export type IdDetailOffer = string;

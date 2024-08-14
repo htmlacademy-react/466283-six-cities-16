@@ -2,6 +2,8 @@ import { Offer } from '../../types/types-offers';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { setLetterUpper } from '../../utils/set-letter-upper';
+import { store } from '../../store';
+import { fetchOfferDetailAction } from '../../store/api-actions';
 type OffersList = {
   offer: Offer;
   onHover?: (newOffer: Offer | null) => void;
@@ -12,6 +14,10 @@ function MainCard({ offer, onHover }: OffersList): JSX.Element {
     if (onHover) {
       onHover(newOffer);
     }
+  };
+
+  const handleCardClick = () => {
+    store.dispatch(fetchOfferDetailAction(offer.id));
   };
 
   return (
@@ -26,7 +32,10 @@ function MainCard({ offer, onHover }: OffersList): JSX.Element {
         </div>
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={AppRoute.Offer.replace(':id', `${offer.id}`)}>
+        <Link
+          to={AppRoute.Offer.replace(':id', `${offer.id}`)}
+          onClick={handleCardClick}
+        >
           <img
             className="place-card__image"
             src={offer.previewImage}

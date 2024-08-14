@@ -9,10 +9,9 @@ function HeaderAuth(): JSX.Element {
   );
   const dispatch = useAppDispatch();
 
-  const correctAuth: string = AuthorizationStatus.Auth;
   return (
     <nav className="header__nav">
-      {authorizationStatus === correctAuth ? (
+      {authorizationStatus === AuthorizationStatus.Auth ? (
         <ul className="header__nav-list">
           <li className="header__nav-item user">
             <Link
