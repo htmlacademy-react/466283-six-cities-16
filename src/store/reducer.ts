@@ -15,7 +15,7 @@ type InitialState = {
   city: string;
   offersList: Offers;
   sortType: string;
-  authorizationStatus: string;
+  authorizationStatus: AuthorizationStatus;
   isOffersListLoading: boolean;
   error: string | null;
 };
