@@ -119,3 +119,5 @@ export enum APIRoute {
   Favorite = '/favorite',
   Comments = '/comments',
 }
+
+export const TIMEOUT_SHOW_ERROR = 2000;

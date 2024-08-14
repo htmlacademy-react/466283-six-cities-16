@@ -5,7 +5,7 @@ import Offer from '../../pages/offer/offer';
 import NotFound from '../../pages/not-found/not-found';
 import PrivateRoute from '../../components/private-route/private-route';
 import Layout from '../../components/layout/layout';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import Loader from '../loader/loader';
@@ -27,14 +27,21 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <PrivateRoute>
                 <Favorites />
               </PrivateRoute>
             }
           />
-          <Route path={AppRoute.Login} element={<Login />} />
-          <Route path={AppRoute.NotFound} element={<NotFound />} />
+          <Route
+            path={AppRoute.Login}
+            element={
+              <PrivateRoute isReverse>
+                <Login />
+              </PrivateRoute>
+            }
+          />
         </Route>
+        <Route path={AppRoute.NotFound} element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
