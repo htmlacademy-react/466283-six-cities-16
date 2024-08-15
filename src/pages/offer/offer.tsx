@@ -1,6 +1,6 @@
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { comments } from '../../mocks/comments';
-import { DetailOffer } from '../../types/types-offers';
+import { DetailOffer, Offers } from '../../types/types-offers';
 import { Comments } from '../../types/types-comments';
 import { calcRaiting } from '../../utils/calc-raiting';
 import { getDataDetailOffer } from '../../utils/get-data-detail-offer';
@@ -23,20 +23,29 @@ function Offer(): JSX.Element {
   const dataDetailOffer: DetailOffer | null = useAppSelector(
     (state) => state.offerDetail
   );
+  
   const isOfferDetailAction = useAppSelector(
     (state) => state.isOfferDetailAction
   );
+  const dataComments = useAppSelector(
+    (state) => state.comments
+  );
+  const iaDataComments = useAppSelector(
+    (state) => state.isCommentsAction
+  );
+  const dataNearOffers = useAppSelector(
+    (state) => state.offersNearby
+  );
+  const iaDataNearOffers = useAppSelector(
+    (state) => state.isOffersNearby
+  );
 
-  if (isOfferDetailAction) {
+  const limitedNearOffers = dataNearOffers.slice(0, 3);
+  const mapOffers = [...limitedNearOffers, dataDetailOffer];
+  if (isOfferDetailAction || iaDataComments || iaDataNearOffers) {
     return <Loader />;
   }
 
-  // const dataNearOffers: NearOffers | undefined = getDataNearOffers(
-  //   id,
-  //   nearOffers
-  // );
-
-  const dataNearOffers = [];
   const acriveClassAcc: string = dataDetailOffer?.host.isPro ? PRO_ACC : '';
 
   if (!dataDetailOffer) {
@@ -133,14 +142,14 @@ function Offer(): JSX.Element {
                 <p className="offer__text">{dataDetailOffer.description}</p>
               </div>
             </div>
-            {/* {dataComments.length && (
+            {dataComments.length && (
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">
                   Reviews &middot;{' '}
                   <span className="reviews__amount">{dataComments.length}</span>
                 </h2>
                 <ul className="reviews__list">
-                  {dataComments.map((commentItem) => (
+                  {dataComments.slice(0, 10).map((commentItem) => (
                     <li key={commentItem.id} className="reviews__item">
                       <div className="reviews__user user">
                         <div className="reviews__avatar-wrapper user__avatar-wrapper">
@@ -177,13 +186,14 @@ function Offer(): JSX.Element {
                 </ul>
                 <FormComment />
               </section>
-            )} */}
+            )}
           </div>
         </div>
         <section className="offer__map map">
           <Map
             city={dataDetailOffer.city.location as City}
-            points={dataNearOffers}
+            points={mapOffers }
+            selectedOffer ={dataDetailOffer}
           />
         </section>
       </section>
@@ -193,9 +203,9 @@ function Offer(): JSX.Element {
             Other places in the neighbourhood
           </h2>
           <div className="near-places__list places__list">
-            {/* {dataNearOffers.slice(0, 3).map((nearOffer) => (
+            {limitedNearOffers.slice(0, 3).map((nearOffer) => (
               <NearOffer key={nearOffer.id} nearOffer={nearOffer} />
-            ))} */}
+            ))}
           </div>
         </section>
       </div>

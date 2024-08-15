@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { setLetterUpper } from '../../utils/set-letter-upper';
 import { store } from '../../store';
-import { fetchOfferDetailAction } from '../../store/api-actions';
+import { fetchComments, fetchOfferDetailAction, fetchOffersNearby } from '../../store/api-actions';
 type OffersList = {
   offer: Offer;
   onHover?: (newOffer: Offer | null) => void;
@@ -18,6 +18,8 @@ function MainCard({ offer, onHover }: OffersList): JSX.Element {
 
   const handleCardClick = () => {
     store.dispatch(fetchOfferDetailAction(offer.id));
+    store.dispatch(fetchComments(offer.id));
+    store.dispatch(fetchOffersNearby(offer.id));
   };
 
   return (

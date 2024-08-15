@@ -2,31 +2,31 @@ import { useRef, useEffect } from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
-import { Offer, Offers } from '../../types/types-offers';
+import { DetailOffer, Offer } from '../../types/types-offers';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const';
 import { City } from '../../types/cities';
 
 type MapProps = {
   city: City;
-  points: Offers;
-  selectedOffer?: Offer | null;
+  points: (Offer | DetailOffer)[];
+  selectedOffer: DetailOffer | Offer;
 };
 const defaultCustomIcon = leaflet.icon({
   iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [29, 37],
-  iconAnchor: [13, 39],
+  iconSize: [27, 39],
+  iconAnchor: [27, 39],
 });
 
 const currentCustomIcon = leaflet.icon({
   iconUrl: URL_MARKER_CURRENT,
-  iconSize: [29, 37],
-  iconAnchor: [13, 39],
+  iconSize: [27, 39],
+  iconAnchor: [27, 39],
 });
+
 
 function Map({ city, points, selectedOffer }: MapProps) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
-
   useEffect(() => {
     if (map) {
       const { latitude: lat, longitude: lng, zoom } = city;

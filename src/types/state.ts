@@ -15,4 +15,4 @@ export type UserData = {
   token: string;
 };
 
-export type IdDetailOffer = string;
+export type Id = string;

@@ -4,7 +4,7 @@ import {
   State,
   AuthData,
   UserData,
-  IdDetailOffer,
+  Id,
 } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { Offers, DetailOffer } from '../types/types-offers';
@@ -16,9 +16,15 @@ import {
   setError,
   offerDetailAction,
   setOfferDetailAction,
+  setCommentsListAction,
+  commentsListAction,
+  setOffersNearbyAction,
+  offersNearbyAction,
 } from './actions';
 import { dropToken, saveToken } from '../services/token';
 import { store } from '.';
+import { Comments } from '../types/types-comments';
+import { NearOffers } from '../types/near-offers';
 
 export const fetchOffersAction = createAsyncThunk<
   void,
@@ -37,7 +43,7 @@ export const fetchOffersAction = createAsyncThunk<
 
 export const fetchOfferDetailAction = createAsyncThunk<
   void,
-  IdDetailOffer,
+  Id,
   {
     dispatch: AppDispatch;
     state: State;
@@ -99,4 +105,34 @@ export const logOut = createAsyncThunk<
 
 export const clearErrorAction = createAsyncThunk('clearError', () => {
   setTimeout(() => store.dispatch(setError(null)), TIMEOUT_SHOW_ERROR);
+});
+
+export const fetchComments = createAsyncThunk<
+  void,
+  Id,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('commentsList', async (id, { dispatch, extra: api }) => {
+  dispatch(setCommentsListAction(true));
+  const { data } = await api.get<Comments>(`${APIRoute.Comments}/${id}`);
+  dispatch(setCommentsListAction(false));
+  dispatch(commentsListAction(data));
+});
+
+export const fetchOffersNearby = createAsyncThunk<
+  void,
+  Id,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('offersNearbyList', async (id, { dispatch, extra: api }) => {
+  dispatch(setOffersNearbyAction(true));
+  const { data } = await api.get<NearOffers>(`${APIRoute.Offers}/${id}/nearby`);
+  dispatch(setOffersNearbyAction(false));
+  dispatch(offersNearbyAction(data));
 });
