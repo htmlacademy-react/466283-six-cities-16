@@ -50,7 +50,6 @@ export const fetchOfferDetailAction = createAsyncThunk<
     extra: AxiosInstance;
   }
 >('offerDetail', async (id, { dispatch, extra: api }) => {
-  dispatch(setOfferDetailAction(true));
   const { data } = await api.get<DetailOffer>(`${APIRoute.Offers}/${id}`);
   dispatch(setOfferDetailAction(false));
   dispatch(offerDetailAction(data));
@@ -116,7 +115,6 @@ export const fetchComments = createAsyncThunk<
     extra: AxiosInstance;
   }
 >('commentsList', async (id, { dispatch, extra: api }) => {
-  dispatch(setCommentsListAction(true));
   const { data } = await api.get<Comments>(`${APIRoute.Comments}/${id}`);
   dispatch(setCommentsListAction(false));
   dispatch(commentsListAction(data));
@@ -131,7 +129,6 @@ export const fetchOffersNearby = createAsyncThunk<
     extra: AxiosInstance;
   }
 >('offersNearbyList', async (id, { dispatch, extra: api }) => {
-  dispatch(setOffersNearbyAction(true));
   const { data } = await api.get<NearOffers>(`${APIRoute.Offers}/${id}/nearby`);
   dispatch(setOffersNearbyAction(false));
   dispatch(offersNearbyAction(data));

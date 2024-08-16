@@ -40,13 +40,13 @@ const initialState: InitialState = {
   offerDetail: null,
   sortType: 'popular',
   authorizationStatus: AuthorizationStatus.Unknown,
-  isOffersListLoading: false,
-  isOfferDetailAction: false,
+  isOffersListLoading: true,
+  isOfferDetailAction: true,
   error: null,
   comments: [],
-  isCommentsAction: false,
+  isCommentsAction: true,
   offersNearby: [],
-  isOffersNearby: false,
+  isOffersNearby: true,
 
 };
 
