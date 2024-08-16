@@ -8,7 +8,7 @@ import { getDataComments } from '../../utils/get-data-comments';
 import { getDate } from '../../utils/get-date';
 import { setLetterUpper } from '../../utils/set-letter-upper';
 import { getCountDataOffer } from '../../utils/get-count-data-offer';
-import { PRO_ACC, AppRoute } from '../../const';
+import { PRO_ACC, AppRoute, AuthorizationStatus } from '../../const';
 import FormComment from '../../components/form-comment/form-comment';
 import NearOffer from '../../components/near-offer/near-offer';
 import { nearOffers } from '../../mocks/near-offer';
@@ -40,8 +40,12 @@ function Offer(): JSX.Element {
     (state) => state.isOffersNearby
   );
 
-  const limitedNearOffers = dataNearOffers.slice(0, 3);
-  const mapOffers = [...limitedNearOffers, dataDetailOffer];
+  const auth = useAppSelector(
+    (state) => state.authorizationStatus
+  );
+
+  const slicedNearOffers = dataNearOffers.slice(0, 3);
+  const mapOffers = [...slicedNearOffers, dataDetailOffer];
   if (isOfferDetailAction || iaDataComments || iaDataNearOffers) {
     return <Loader />;
   }
@@ -142,51 +146,49 @@ function Offer(): JSX.Element {
                 <p className="offer__text">{dataDetailOffer.description}</p>
               </div>
             </div>
-            {dataComments.length && (
-              <section className="offer__reviews reviews">
-                <h2 className="reviews__title">
+            <section className="offer__reviews reviews">
+              <h2 className="reviews__title">
                   Reviews &middot;{' '}
-                  <span className="reviews__amount">{dataComments.length}</span>
-                </h2>
-                <ul className="reviews__list">
-                  {dataComments.slice(0, 10).map((commentItem) => (
-                    <li key={commentItem.id} className="reviews__item">
-                      <div className="reviews__user user">
-                        <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                          <img
-                            className="reviews__avatar user__avatar"
-                            src={commentItem.user.avatarUrl}
-                            width="54"
-                            height="54"
-                            alt="Reviews avatar"
+                <span className="reviews__amount">{dataComments.length}</span>
+              </h2>
+              <ul className="reviews__list">
+                {dataComments.slice(0, 10).map((commentItem) => (
+                  <li key={commentItem.id} className="reviews__item">
+                    <div className="reviews__user user">
+                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
+                        <img
+                          className="reviews__avatar user__avatar"
+                          src={commentItem.user.avatarUrl}
+                          width="54"
+                          height="54"
+                          alt="Reviews avatar"
+                        />
+                      </div>
+                      <span className="reviews__user-name">
+                        {commentItem.user.name}
+                      </span>
+                    </div>
+                    <div className="reviews__info">
+                      <div className="reviews__rating rating">
+                        <div className="reviews__stars rating__stars">
+                          <span
+                            style={{
+                              width: `${calcRaiting(commentItem.rating)}%`,
+                            }}
                           />
+                          <span className="visually-hidden">Rating</span>
                         </div>
-                        <span className="reviews__user-name">
-                          {commentItem.user.name}
-                        </span>
                       </div>
-                      <div className="reviews__info">
-                        <div className="reviews__rating rating">
-                          <div className="reviews__stars rating__stars">
-                            <span
-                              style={{
-                                width: `${calcRaiting(commentItem.rating)}%`,
-                              }}
-                            />
-                            <span className="visually-hidden">Rating</span>
-                          </div>
-                        </div>
-                        <p className="reviews__text">{commentItem.comment}</p>
-                        <time className="reviews__time" dateTime="2019-04-24">
-                          {getDate(commentItem.date)}
-                        </time>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-                <FormComment />
-              </section>
-            )}
+                      <p className="reviews__text">{commentItem.comment}</p>
+                      <time className="reviews__time" dateTime="2019-04-24">
+                        {getDate(commentItem.date)}
+                      </time>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              {auth === AuthorizationStatus.Auth && <FormComment />}
+            </section>
           </div>
         </div>
         <section className="offer__map map">
@@ -203,7 +205,7 @@ function Offer(): JSX.Element {
             Other places in the neighbourhood
           </h2>
           <div className="near-places__list places__list">
-            {limitedNearOffers.slice(0, 3).map((nearOffer) => (
+            {slicedNearOffers.slice(0, 3).map((nearOffer) => (
               <NearOffer key={nearOffer.id} nearOffer={nearOffer} />
             ))}
           </div>
