@@ -83,7 +83,7 @@ export const reducer = createReducer(initialState, (builder) => {
       state.comments = action.payload;
     })
     .addCase(setCommentsListAction, (state, action: PayloadAction<boolean>) => {
-      state.isOfferDetailAction = action.payload;
+      state.isCommentsAction = action.payload;
     })
     .addCase(offersNearbyAction, (state, action) => {
       state.offersNearby = action.payload;

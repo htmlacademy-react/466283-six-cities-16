@@ -58,7 +58,6 @@ function Offer(): JSX.Element {
   if (isOfferDetailAction || iaDataComments || iaDataNearOffers) {
     return <Loader />;
   }
-
   const acriveClassAcc: string = dataDetailOffer?.host.isPro ? PRO_ACC : '';
 
   if (!dataDetailOffer) {
