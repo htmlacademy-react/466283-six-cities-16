@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { comments } from '../../mocks/comments';
 import { DetailOffer, Offers } from '../../types/types-offers';
 import { Comments } from '../../types/types-comments';
@@ -16,14 +16,17 @@ import { NearOffers } from '../../types/near-offers';
 import { getDataNearOffers } from '../../utils/get-data-near-offers';
 import Map from '../../components/map/map';
 import { City } from '../../types/cities';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loader from '../../components/loader/loader';
+import { useEffect } from 'react';
+import { fetchComments, fetchOfferDetailAction, fetchOffersNearby } from '../../store/api-actions';
 
 function Offer(): JSX.Element {
+  const {id} = useParams();
   const dataDetailOffer: DetailOffer | null = useAppSelector(
     (state) => state.offerDetail
   );
-  
+
   const isOfferDetailAction = useAppSelector(
     (state) => state.isOfferDetailAction
   );
@@ -43,6 +46,12 @@ function Offer(): JSX.Element {
   const auth = useAppSelector(
     (state) => state.authorizationStatus
   );
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchOfferDetailAction(id as string));
+    dispatch(fetchComments(id as string));
+    dispatch(fetchOffersNearby(id as string));
+  }, [dispatch, id]);
 
   const slicedNearOffers = dataNearOffers.slice(0, 3);
   const mapOffers = [...slicedNearOffers, dataDetailOffer];

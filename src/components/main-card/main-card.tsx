@@ -16,12 +16,6 @@ function MainCard({ offer, onHover }: OffersList): JSX.Element {
     }
   };
 
-  const handleCardClick = () => {
-    store.dispatch(fetchOfferDetailAction(offer.id));
-    store.dispatch(fetchComments(offer.id));
-    store.dispatch(fetchOffersNearby(offer.id));
-  };
-
   return (
     <article
       className="cities__card place-card"
@@ -36,7 +30,6 @@ function MainCard({ offer, onHover }: OffersList): JSX.Element {
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link
           to={AppRoute.Offer.replace(':id', `${offer.id}`)}
-          onClick={handleCardClick}
         >
           <img
             className="place-card__image"
