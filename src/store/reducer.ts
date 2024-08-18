@@ -52,42 +52,55 @@ const initialState: InitialState = {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
+    //смена города
     .addCase(cityAction, (state, value: PayloadAction<string>) => {
       state.city = value.payload;
     })
+    //загрузка предложений
     .addCase(offerListAction, (state, action: PayloadAction<Offers>) => {
       state.offersList = action.payload;
     })
-    .addCase(setOfferDetailAction, (state, action: PayloadAction<boolean>) => {
-      state.isOfferDetailAction = action.payload;
-    })
-    .addCase(offerDetailAction, (state, action: PayloadAction<DetailOffer>) => {
-      state.offerDetail = action.payload;
-    })
+    //проверка загрузки предложений
     .addCase(setOfferListAction, (state, action: PayloadAction<boolean>) => {
       state.isOffersListLoading = action.payload;
     })
+    //загрузка детального предложения
+    .addCase(offerDetailAction, (state, action: PayloadAction<DetailOffer>) => {
+      state.offerDetail = action.payload;
+    })
+    //проверка загрузки детального предложения
+    .addCase(setOfferDetailAction, (state, action: PayloadAction<boolean>) => {
+      state.isOfferDetailAction = action.payload;
+    })
+    //Тип сортировки
     .addCase(sortTypeAction, (state, action: PayloadAction<string>) => {
       state.sortType = action.payload;
     })
+    //Сбросить тип сортировки
     .addCase(resetTypeAction, (state, action: PayloadAction<string>) => {
       state.sortType = action.payload;
     })
+    //Авторизация
     .addCase(requireAuthorizationAction, (state, action) => {
       state.authorizationStatus = action.payload;
     })
+    //вывод ошибки
     .addCase(setError, (state, action) => {
       state.error = action.payload;
     })
+  //получение комментариев
     .addCase(commentsListAction, (state, action) => {
       state.comments = action.payload;
     })
+  //проверка загрузки комментариев
     .addCase(setCommentsListAction, (state, action: PayloadAction<boolean>) => {
       state.isCommentsAction = action.payload;
     })
+    //получение предложений рядом
     .addCase(offersNearbyAction, (state, action) => {
       state.offersNearby = action.payload;
     })
+    //проверка загрузки предложений рядом
     .addCase(setOffersNearbyAction, (state, action: PayloadAction<boolean>) => {
       state.isOffersNearby = action.payload;
     });

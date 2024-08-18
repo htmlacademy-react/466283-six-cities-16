@@ -26,6 +26,7 @@ import { store } from '.';
 import { Comments } from '../types/types-comments';
 import { NearOffers } from '../types/near-offers';
 
+//запрос предложений
 export const fetchOffersAction = createAsyncThunk<
   void,
   undefined,
@@ -41,6 +42,7 @@ export const fetchOffersAction = createAsyncThunk<
   dispatch(offerListAction(data));
 });
 
+//запрос детальной страницы
 export const fetchOfferDetailAction = createAsyncThunk<
   void,
   Id,
@@ -72,6 +74,7 @@ export const checkAuthAction = createAsyncThunk<
   }
 });
 
+//запрос на авторизацию
 export const logIn = createAsyncThunk<
   void,
   AuthData,
@@ -88,6 +91,7 @@ export const logIn = createAsyncThunk<
   dispatch(requireAuthorizationAction(AuthorizationStatus.Auth));
 });
 
+//запрос на выход из личного кабинета
 export const logOut = createAsyncThunk<
   void,
   undefined,
@@ -106,6 +110,7 @@ export const clearErrorAction = createAsyncThunk('clearError', () => {
   setTimeout(() => store.dispatch(setError(null)), TIMEOUT_SHOW_ERROR);
 });
 
+//запрос комментариев
 export const fetchComments = createAsyncThunk<
   void,
   Id,
@@ -120,6 +125,7 @@ export const fetchComments = createAsyncThunk<
   dispatch(commentsListAction(data));
 });
 
+//запрос предложений рядом
 export const fetchOffersNearby = createAsyncThunk<
   void,
   Id,
