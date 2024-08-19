@@ -1,8 +1,13 @@
 import { useState } from 'react';
+import { store } from '../../store';
+import { sendComment } from '../../store/api-actions';
+import { useAppSelector } from '../../hooks';
 function FormComment(): JSX.Element {
-  const [, setRating] = useState(0);
-  const [, setComment] = useState('');
-
+  const [raiting, setRating] = useState(0);
+  const [comment, setComment] = useState('');
+  const idDetail = useAppSelector(
+    (state) => state.offerDetail?.id
+  );
   const getComment = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(event.target.value);
   };
@@ -11,8 +16,15 @@ function FormComment(): JSX.Element {
       setRating(Number(event.target.value));
     }
   };
+  const handleFormSubmit = () => {
+    if(idDetail) {
+      store.dispatch(sendComment({id: idDetail, comment: {comment: comment, rating: raiting}}));
+    }
+    setComment('');
+    setRating(0);
+  };
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleFormSubmit}>
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
@@ -123,7 +135,6 @@ function FormComment(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
         >
           Submit
         </button>

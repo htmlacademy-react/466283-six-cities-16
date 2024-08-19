@@ -13,12 +13,12 @@ import {
   setCommentsListAction,
   offersNearbyAction,
   setOffersNearbyAction,
+  setCommentAction,
 } from './actions';
 import { AuthorizationStatus, DEFAULT_CITY } from '../const';
 import { DetailOffer, Offers } from '../types/types-offers';
-import { Comments } from '../types/types-comments';
+import { Comments, Comment } from '../types/types-comments';
 import { NearOffers } from '../types/near-offers';
-
 type InitialState = {
   city: string;
   offersList: Offers;
@@ -28,7 +28,7 @@ type InitialState = {
   isOffersListLoading: boolean;
   isOfferDetailAction: boolean;
   error: string | null;
-  comments: Comments;
+  comments: Comment[];
   isCommentsAction: boolean;
   offersNearby: NearOffers;
   isOffersNearby: boolean;
@@ -47,9 +47,11 @@ const initialState: InitialState = {
   isCommentsAction: true,
   offersNearby: [],
   isOffersNearby: true,
-
 };
-
+type ShortComment = {
+  comment: string;
+    rating: number;
+}
 export const reducer = createReducer(initialState, (builder) => {
   builder
     //смена города
@@ -103,5 +105,10 @@ export const reducer = createReducer(initialState, (builder) => {
     //проверка загрузки предложений рядом
     .addCase(setOffersNearbyAction, (state, action: PayloadAction<boolean>) => {
       state.isOffersNearby = action.payload;
+    })
+    //отправка комментария
+    .addCase(setCommentAction, (state, action: PayloadAction<ShortComment>) => {
+      state.comments.push(action.payload);
     });
+
 });

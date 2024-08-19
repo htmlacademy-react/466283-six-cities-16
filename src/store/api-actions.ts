@@ -20,10 +20,11 @@ import {
   commentsListAction,
   setOffersNearbyAction,
   offersNearbyAction,
+  setCommentAction,
 } from './actions';
 import { dropToken, saveToken } from '../services/token';
 import { store } from '.';
-import { Comments } from '../types/types-comments';
+import { Comments, Comment } from '../types/types-comments';
 import { NearOffers } from '../types/near-offers';
 
 //запрос предложений
@@ -138,4 +139,26 @@ export const fetchOffersNearby = createAsyncThunk<
   const { data } = await api.get<NearOffers>(`${APIRoute.Offers}/${id}/nearby`);
   dispatch(setOffersNearbyAction(false));
   dispatch(offersNearbyAction(data));
+});
+
+//отправка комментария
+type AddForm = {
+  id: string;
+  comment: Comment;
+}
+type ShortComment = {
+  comment: string;
+    rating: number;
+}
+export const sendComment = createAsyncThunk<
+  void,
+  AddForm,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('sendComment', async ({id, comment}, { dispatch, extra: api }) => {
+  const { data } = await api.post<Comment>(`${APIRoute.Comments}/${id}`, {comment});
+  dispatch(setCommentAction(data));
 });
