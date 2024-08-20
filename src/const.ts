@@ -12,6 +12,14 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export const Ratings = [
+  { value: 5, title: 'perfect' },
+  { value: 4, title: 'good' },
+  { value: 3, title: 'not bad' },
+  { value: 2, title: 'badly' },
+  { value: 1, title: 'terribly' },
+];
+
 export const FAVORITE_BUTTON: string = 'place-card__bookmark-button--active';
 export const PRO_ACC: string = 'offer__avatar-wrapper--pro';
 

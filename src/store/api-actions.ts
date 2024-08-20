@@ -142,14 +142,15 @@ export const fetchOffersNearby = createAsyncThunk<
 });
 
 //отправка комментария
-type AddForm = {
-  id: string;
-  comment: Comment;
-}
 type ShortComment = {
   comment: string;
     rating: number;
 }
+type AddForm = {
+  id: string;
+  comment: ShortComment;
+}
+
 export const sendComment = createAsyncThunk<
   void,
   AddForm,
@@ -159,6 +160,6 @@ export const sendComment = createAsyncThunk<
     extra: AxiosInstance;
   }
 >('sendComment', async ({id, comment}, { dispatch, extra: api }) => {
-  const { data } = await api.post<Comment>(`${APIRoute.Comments}/${id}`, {comment});
+  const { data } = await api.post<Comment>(`${APIRoute.Comments}/${id}`, comment);
   dispatch(setCommentAction(data));
 });
