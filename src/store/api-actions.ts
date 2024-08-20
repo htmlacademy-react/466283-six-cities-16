@@ -21,6 +21,7 @@ import {
   setOffersNearbyAction,
   offersNearbyAction,
   setCommentAction,
+  setEmailAction,
 } from './actions';
 import { dropToken, saveToken } from '../services/token';
 import { store } from '.';
@@ -86,9 +87,11 @@ export const logIn = createAsyncThunk<
   }
 >('login', async ({ login: email, password }, { dispatch, extra: api }) => {
   const {
-    data: { token },
+    data: { token, avatarUrl },
   } = await api.post<UserData>(APIRoute.Login, { email, password });
+
   saveToken(token);
+  dispatch(setEmailAction({email: email, avatar: avatarUrl}));
   dispatch(requireAuthorizationAction(AuthorizationStatus.Auth));
 });
 

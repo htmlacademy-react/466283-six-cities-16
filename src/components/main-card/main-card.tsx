@@ -2,8 +2,6 @@ import { Offer } from '../../types/types-offers';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { setLetterUpper } from '../../utils/set-letter-upper';
-import { store } from '../../store';
-import { fetchComments, fetchOfferDetailAction, fetchOffersNearby } from '../../store/api-actions';
 type OffersList = {
   offer: Offer;
   onHover?: (newOffer: Offer | null) => void;

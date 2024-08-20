@@ -13,6 +13,7 @@ function Main(): JSX.Element {
   const offers: Offers = useAppSelector((state) => state.offersList);
   const sortingType = useAppSelector((state) => state.sortType);
   const [selectedOffer, setSelectedOffer] = useState<Offer | null | DetailOffer>(null);
+  const [favorite, setFavorite] = useState<boolean>(false);
   const [city, setCity] = useState(selectedCity);
   const cityOffers = offers
     .filter((offer) => offer.city.name === city)

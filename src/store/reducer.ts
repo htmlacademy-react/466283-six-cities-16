@@ -14,11 +14,13 @@ import {
   offersNearbyAction,
   setOffersNearbyAction,
   setCommentAction,
+  setEmailAction,
 } from './actions';
 import { AuthorizationStatus, DEFAULT_CITY } from '../const';
 import { DetailOffer, Offers } from '../types/types-offers';
-import { Comments, Comment } from '../types/types-comments';
+import { Comment } from '../types/types-comments';
 import { NearOffers } from '../types/near-offers';
+import { userInfo } from '../types/user';
 type InitialState = {
   city: string;
   offersList: Offers;
@@ -32,6 +34,8 @@ type InitialState = {
   isCommentsAction: boolean;
   offersNearby: NearOffers;
   isOffersNearby: boolean;
+  userInfo: userInfo;
+  favorites: [];
 };
 
 const initialState: InitialState = {
@@ -47,6 +51,11 @@ const initialState: InitialState = {
   isCommentsAction: true,
   offersNearby: [],
   isOffersNearby: true,
+  userInfo: {
+    email: '',
+    avatar: ''
+  },
+  favorites: [],
 };
 type ShortComment = {
   comment: string;
@@ -109,6 +118,10 @@ export const reducer = createReducer(initialState, (builder) => {
     //отправка комментария
     .addCase(setCommentAction, (state, action: PayloadAction<ShortComment>) => {
       state.comments.push(action.payload);
+    })
+    //добавление почты
+    .addCase(setEmailAction, (state, action: PayloadAction<userInfo>) => {
+      state.userInfo = action.payload;
     });
 
 });

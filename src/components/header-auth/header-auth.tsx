@@ -7,6 +7,9 @@ function HeaderAuth(): JSX.Element {
   const authorizationStatus = useAppSelector(
     (state) => state.authorizationStatus
   );
+  const userEmail = useAppSelector(
+    (state) => state.userInfo
+  );
   const dispatch = useAppDispatch();
 
   return (
@@ -18,9 +21,13 @@ function HeaderAuth(): JSX.Element {
               className="header__nav-link header__nav-link--profile"
               to={AppRoute.Favorites}
             >
-              <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+              <div className="header__avatar-wrapper user__avatar-wrapper"style={{
+                backgroundImage: `url(${userEmail?.avatar})`,
+                borderRadius: '50%',
+              }}
+              />
               <span className="header__user-name user__name">
-                Oliver.conner@gmail.com
+                {userEmail.email}
               </span>
               <span className="header__favorite-count">3</span>
             </Link>

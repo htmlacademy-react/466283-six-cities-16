@@ -1,8 +1,9 @@
 import { createAction } from '@reduxjs/toolkit';
 import { Offers, DetailOffer } from '../types/types-offers';
 import { AuthorizationStatus } from '../const';
-import { Comments, Comment } from '../types/types-comments';
+import { Comments } from '../types/types-comments';
 import { NearOffers } from '../types/near-offers';
+import { userInfo } from '../types/user';
 export const cityAction = createAction('city', (value: string) => ({
   payload: value,
 }));
@@ -52,5 +53,9 @@ type ShortComment = {
     rating: number;
 }
 export const setCommentAction = createAction('setComment', (value: ShortComment) => ({
+  payload: value,
+}));
+
+export const setEmailAction = createAction('setEmail', (value: userInfo) => ({
   payload: value,
 }));
