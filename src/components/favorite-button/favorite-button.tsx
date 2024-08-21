@@ -1,20 +1,18 @@
-import { FAVORITE_BUTTON } from '../../const';
-type ButtonFavorite = {
-  buttonActive: boolean;
-};
-function FavoriteButton({ buttonActive }: ButtonFavorite): JSX.Element {
-  const classActive: string = buttonActive ? FAVORITE_BUTTON : '';
-  return (
-    <button
-      className={`place-card__bookmark-button ${classActive} button`}
-      type="button"
-    >
-      <svg className="place-card__bookmark-icon" width="18" height="19">
-        <use xlinkHref="#icon-bookmark"></use>
-      </svg>
-      <span className="visually-hidden">In bookmarks</span>
-    </button>
-  );
+type FavoriteButtonProps = {
+  isFavorite: boolean;
+  className: string;
 }
 
+function FavoriteButton({isFavorite, className}: FavoriteButtonProps): JSX.Element {
+
+  return (
+    <button className={`${isFavorite ? `${className}__bookmark-button--active` : ''} ${className}__bookmark-button button`} type="button">
+      <svg className={`${className}__bookmark-icon`} width={className === 'offer' ? '31' : '18'} height={className === 'offer' ? '33' : '19'}>
+        <use xlinkHref="#icon-bookmark"></use>
+      </svg>
+      <span className="visually-hidden">{isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
+    </button>
+
+  );
+}
 export default FavoriteButton;

@@ -2,6 +2,7 @@ import { Offer } from '../../types/types-offers';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { setLetterUpper } from '../../utils/set-letter-upper';
+import FavoriteButton from '../favorite-button/favorite-button';
 type OffersList = {
   offer: Offer;
   onHover?: (newOffer: Offer | null) => void;
@@ -44,15 +45,7 @@ function MainCard({ offer, onHover }: OffersList): JSX.Element {
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button
-            className={'place-card__bookmark-button button'}
-            type="button"
-          >
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <FavoriteButton isFavorite={offer.isFavorite} className='place-card' />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
