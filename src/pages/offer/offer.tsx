@@ -53,8 +53,7 @@ function Offer(): JSX.Element {
     dispatch(fetchOffersNearby(id as string));
   }, [dispatch, id]);
 
-  const slicedNearOffers = dataNearOffers.slice(0, 3);
-  const mapOffers = [...slicedNearOffers, dataDetailOffer];
+
   if (isOfferDetailAction || iaDataComments || iaDataNearOffers) {
     return <Loader />;
   }
@@ -63,12 +62,14 @@ function Offer(): JSX.Element {
   if (!dataDetailOffer) {
     return <Navigate to={AppRoute.NotFound} replace />;
   }
+  const slicedNearOffers = dataNearOffers.slice(0, 3);
+  const mapOffers = [...slicedNearOffers, dataDetailOffer];
   return (
     <main className="page__main page__main--offer">
       <section className="offer">
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
-            {dataDetailOffer?.images.map((img: string) => (
+            {dataDetailOffer.images.map((img: string) => (
               <div key={img} className="offer__image-wrapper">
                 <img className="offer__image" src={img} alt="Photo studio" />
               </div>
@@ -77,7 +78,7 @@ function Offer(): JSX.Element {
         </div>
         <div className="offer__container container">
           <div className="offer__wrapper">
-            {dataDetailOffer?.isPremium && (
+            {dataDetailOffer.isPremium && (
               <div className="offer__mark">
                 <span>Premium</span>
               </div>

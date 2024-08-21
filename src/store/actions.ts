@@ -1,7 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 import { Offers, DetailOffer } from '../types/types-offers';
 import { AuthorizationStatus } from '../const';
-import { Comments } from '../types/types-comments';
+import { Comment, Comments } from '../types/types-comments';
 import { NearOffers } from '../types/near-offers';
 import { userInfo } from '../types/user';
 export const cityAction = createAction('city', (value: string) => ({
@@ -48,11 +48,8 @@ export const offersNearbyAction = createAction('offersNearby', (value: NearOffer
 }));
 
 export const setOffersNearbyAction = createAction<boolean>('setOffersNearby');
-type ShortComment = {
-  comment: string;
-    rating: number;
-}
-export const setCommentAction = createAction('setComment', (value: ShortComment) => ({
+
+export const setCommentAction = createAction('setComment', (value: Comment) => ({
   payload: value,
 }));
 

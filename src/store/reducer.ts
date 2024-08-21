@@ -57,10 +57,7 @@ const initialState: InitialState = {
   },
   favorites: [],
 };
-type ShortComment = {
-  comment: string;
-    rating: number;
-}
+
 export const reducer = createReducer(initialState, (builder) => {
   builder
     //смена города
@@ -116,7 +113,7 @@ export const reducer = createReducer(initialState, (builder) => {
       state.isOffersNearby = action.payload;
     })
     //отправка комментария
-    .addCase(setCommentAction, (state, action: PayloadAction<ShortComment>) => {
+    .addCase(setCommentAction, (state, action: PayloadAction<Comment>) => {
       state.comments.push(action.payload);
     })
     //добавление почты
