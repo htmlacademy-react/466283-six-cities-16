@@ -15,6 +15,8 @@ import {
   setOffersNearbyAction,
   setCommentAction,
   setEmailAction,
+  changeFavoriteStatusAction,
+  updateOfferAction,
 } from './actions';
 import { AuthorizationStatus, DEFAULT_CITY } from '../const';
 import { DetailOffer, Offers } from '../types/types-offers';
@@ -35,7 +37,7 @@ type InitialState = {
   offersNearby: NearOffers;
   isOffersNearby: boolean;
   userInfo: userInfo;
-  favorites: [];
+  favorites: DetailOffer[];
 };
 
 const initialState: InitialState = {
@@ -119,6 +121,15 @@ export const reducer = createReducer(initialState, (builder) => {
     //добавление почты
     .addCase(setEmailAction, (state, action: PayloadAction<userInfo>) => {
       state.userInfo = action.payload;
+    })
+    .addCase(changeFavoriteStatusAction, (state, action: PayloadAction<DetailOffer>) => {
+      if (action.payload.isFavorite) {
+        state.favorites = [...state.favorites, action.payload];
+      } else {
+        state.favorites = state.favorites.filter((favoriteOffer) => favoriteOffer.id !== action.payload.id);
+      }
+    })
+    .addCase(updateOfferAction, (state, action) => {
+      state.offersList = state.offersList.map((offer) => (offer.id === action.payload ? {...offer, isFavorite: !offer?.isFavorite} : offer));
     });
-
 });

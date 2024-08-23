@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logOut } from '../../store/api-actions';
+import { DetailOffer } from '../../types/types-offers';
 
 function HeaderAuth(): JSX.Element {
   const authorizationStatus = useAppSelector(
@@ -10,6 +11,7 @@ function HeaderAuth(): JSX.Element {
   const userEmail = useAppSelector(
     (state) => state.userInfo
   );
+  const favoriteOffers: DetailOffer[] = useAppSelector((state) => state.favorites);
   const dispatch = useAppDispatch();
 
   return (
@@ -22,14 +24,14 @@ function HeaderAuth(): JSX.Element {
               to={AppRoute.Favorites}
             >
               <div className="header__avatar-wrapper user__avatar-wrapper"style={{
-                backgroundImage: `url(${userEmail?.avatar})`,
+                backgroundImage: `url(${userEmail.avatar})`,
                 borderRadius: '50%',
               }}
               />
               <span className="header__user-name user__name">
                 {userEmail.email}
               </span>
-              <span className="header__favorite-count">3</span>
+              <span className="header__favorite-count">{favoriteOffers.length}</span>
             </Link>
           </li>
           <li className="header__nav-item user">

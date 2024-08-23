@@ -3,10 +3,11 @@ import NavList from '../../components/nav-list/nav-list';
 import Map from '../../components/map/map';
 import { CITIES, sortOptions } from '../../const';
 import { Offers, Offer, DetailOffer } from '../../types/types-offers';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MainEmpty from '../main-empty/main-empty';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import SortingOptions from '../../components/sorting-options/sorting-options';
+import { fetchOffersAction } from '../../store/api-actions';
 
 function Main(): JSX.Element {
   const selectedCity: string = useAppSelector((state) => state.city);
@@ -21,6 +22,7 @@ function Main(): JSX.Element {
   const handleHover = (newOffer: Offer | null) => {
     setSelectedOffer(newOffer);
   };
+
   return (
     <main className={`page__main page__main--index  ${isEmptyOffers}`}>
       <h1 className="visually-hidden">Cities</h1>

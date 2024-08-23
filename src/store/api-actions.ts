@@ -22,6 +22,8 @@ import {
   offersNearbyAction,
   setCommentAction,
   setEmailAction,
+  changeFavoriteStatusAction,
+  updateOfferAction,
 } from './actions';
 import { dropToken, saveToken } from '../services/token';
 import { store } from '.';
@@ -166,3 +168,23 @@ export const sendComment = createAsyncThunk<
   const { data } = await api.post<Comment>(`${APIRoute.Comments}/${id}`, comment);
   dispatch(setCommentAction(data));
 });
+
+type Status = {
+  id: string;
+  status: number;
+}
+//добавление/удаление из избранного
+export const changeFavorite = createAsyncThunk<
+  void,
+  Status,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('changeFavorite', async ({id, status}, { dispatch, extra: api }) => {
+  const { data } = await api.post<DetailOffer>(`${APIRoute.Favorite}/${id}/${status}`);
+  dispatch(changeFavoriteStatusAction(data));
+  dispatch(updateOfferAction(id));
+});
+

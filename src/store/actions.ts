@@ -56,3 +56,11 @@ export const setCommentAction = createAction('setComment', (value: Comment) => (
 export const setEmailAction = createAction('setEmail', (value: userInfo) => ({
   payload: value,
 }));
+
+export const changeFavoriteStatusAction = createAction('changeFavoriteStatus', (value) => ({
+  payload: value,
+}));
+
+export const updateOfferAction = createAction('updateOfferAction', (value) => ({
+  payload: value,
+}));

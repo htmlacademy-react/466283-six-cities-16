@@ -86,7 +86,7 @@ function Offer(): JSX.Element {
             )}
             <div className="offer__name-wrapper">
               <h1 className="offer__name">{dataDetailOffer?.title}</h1>
-              <FavoriteButton isFavorite={dataDetailOffer.isFavorite} className='offer'/>
+              <FavoriteButton idItem={dataDetailOffer.id} isFavorite={dataDetailOffer.isFavorite} className='offer'/>
             </div>
             <div className="offer__rating rating">
               <div className="offer__stars rating__stars">

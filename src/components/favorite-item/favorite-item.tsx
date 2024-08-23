@@ -50,7 +50,7 @@ function FavoriteItem(props: Cities): JSX.Element {
                     &#47;&nbsp;night
                   </span>
                 </div>
-                <FavoriteButton isFavorite={cityItem.isFavorite} className='place-card' />
+                <FavoriteButton idItem={cityItem.id} isFavorite={cityItem.isFavorite} className='place-card' />
               </div>
               <div className="place-card__rating rating">
                 <div className="place-card__stars rating__stars">
