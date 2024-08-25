@@ -11,6 +11,7 @@ function SortingOptions(): JSX.Element {
   const activeClass = isOpen ? 'places__options--opened' : '';
   const a = (key: PlacesSortType) => {
     dispatch(sortTypeAction(key));
+    setIsOpen((state) => !state);
   };
   return (
     <form className="places__sorting" action="#" method="get">

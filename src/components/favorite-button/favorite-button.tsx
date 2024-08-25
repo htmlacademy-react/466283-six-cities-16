@@ -1,4 +1,6 @@
-import { useAppDispatch } from '../../hooks';
+import { useNavigate } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeFavorite } from '../../store/api-actions';
 
 type FavoriteButtonProps = {
@@ -12,9 +14,15 @@ function FavoriteButton({
   className,
   idItem,
 }: FavoriteButtonProps): JSX.Element {
+  const navigate = useNavigate();
+  const auth = useAppSelector((state) => state.authorizationStatus);
   const dispatch = useAppDispatch();
   const handleClick = () => {
-    dispatch(changeFavorite({ id: idItem, status: Number(!isFavorite) }));
+    if (auth === AuthorizationStatus.NoAuth) {
+      navigate(AppRoute.Login);
+    } else {
+      dispatch(changeFavorite({ id: idItem, status: Number(!isFavorite) }));
+    }
   };
   return (
     <button

@@ -17,7 +17,6 @@ import {
   setEmailAction,
   changeFavoriteStatusAction,
   updateOfferAction,
-  updateDetailOfferAction,
 } from './actions';
 import { AuthorizationStatus, DEFAULT_CITY } from '../const';
 import { DetailOffer, Offers } from '../types/types-offers';
@@ -141,10 +140,12 @@ export const reducer = createReducer(initialState, (builder) => {
           ? { ...offer, isFavorite: !offer?.isFavorite }
           : offer
       );
-      state.offerDetail =
+      if(state.offerDetail) {
+        state.offerDetail =
         state.offerDetail?.id === action.payload
           ? { ...state.offerDetail, isFavorite: !state.offerDetail?.isFavorite }
           : state.offerDetail;
+      }
       if (state.offersNearby.length) {
         state.offersNearby = state.offersNearby.map((offer) =>
           offer.id === action.payload
