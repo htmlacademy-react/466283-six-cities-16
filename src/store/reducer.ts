@@ -116,7 +116,7 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     //отправка комментария
     .addCase(setCommentAction, (state, action: PayloadAction<Comment>) => {
-      state.comments.push(action.payload);
+      state.comments.unshift(action.payload);
     })
     //добавление почты
     .addCase(setEmailAction, (state, action: PayloadAction<userInfo>) => {

@@ -1,19 +1,10 @@
 import { Navigate, useParams } from 'react-router-dom';
-import { comments } from '../../mocks/comments';
-import { DetailOffer, Offers } from '../../types/types-offers';
-import { Comments } from '../../types/types-comments';
+import { DetailOffer } from '../../types/types-offers';
 import { calcRaiting } from '../../utils/calc-raiting';
-import { getDataDetailOffer } from '../../utils/get-data-detail-offer';
-import { getDataComments } from '../../utils/get-data-comments';
-import { getDate } from '../../utils/get-date';
 import { setLetterUpper } from '../../utils/set-letter-upper';
 import { getCountDataOffer } from '../../utils/get-count-data-offer';
-import { PRO_ACC, AppRoute, AuthorizationStatus } from '../../const';
-import FormComment from '../../components/form-comment/form-comment';
+import { PRO_ACC, AppRoute } from '../../const';
 import NearOffer from '../../components/near-offer/near-offer';
-import { nearOffers } from '../../mocks/near-offer';
-import { NearOffers } from '../../types/near-offers';
-import { getDataNearOffers } from '../../utils/get-data-near-offers';
 import Map from '../../components/map/map';
 import { City } from '../../types/cities';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -21,6 +12,7 @@ import Loader from '../../components/loader/loader';
 import { useEffect } from 'react';
 import { fetchComments, fetchOfferDetailAction, fetchOffersNearby } from '../../store/api-actions';
 import FavoriteButton from '../../components/favorite-button/favorite-button';
+import CommentsList from '../../components/comments-list/comments-list';
 
 function Offer(): JSX.Element {
   const {id} = useParams();
@@ -44,9 +36,6 @@ function Offer(): JSX.Element {
     (state) => state.isOffersNearby
   );
 
-  const auth = useAppSelector(
-    (state) => state.authorizationStatus
-  );
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchOfferDetailAction(id as string));
@@ -156,43 +145,7 @@ function Offer(): JSX.Element {
                   Reviews &middot;{' '}
                 <span className="reviews__amount">{dataComments.length}</span>
               </h2>
-              <ul className="reviews__list">
-                {dataComments.slice(0, 10).map((commentItem) => (
-                  <li key={commentItem.id} className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img
-                          className="reviews__avatar user__avatar"
-                          src={commentItem.user.avatarUrl}
-                          width="54"
-                          height="54"
-                          alt="Reviews avatar"
-                        />
-                      </div>
-                      <span className="reviews__user-name">
-                        {commentItem.user.name}
-                      </span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span
-                            style={{
-                              width: `${calcRaiting(commentItem.rating)}%`,
-                            }}
-                          />
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">{commentItem.comment}</p>
-                      <time className="reviews__time" dateTime="2019-04-24">
-                        {getDate(commentItem.date)}
-                      </time>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              {auth === AuthorizationStatus.Auth && <FormComment />}
+              <CommentsList dataComments={dataComments} />
             </section>
           </div>
         </div>
