@@ -3,11 +3,10 @@ import NavList from '../../components/nav-list/nav-list';
 import Map from '../../components/map/map';
 import { CITIES, sortOptions } from '../../const';
 import { Offers, Offer, DetailOffer } from '../../types/types-offers';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import MainEmpty from '../main-empty/main-empty';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import SortingOptions from '../../components/sorting-options/sorting-options';
-import { fetchOffersAction } from '../../store/api-actions';
 
 function Main(): JSX.Element {
   const selectedCity: string = useAppSelector((state) => state.city);

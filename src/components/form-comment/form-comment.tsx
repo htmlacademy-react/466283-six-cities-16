@@ -31,7 +31,7 @@ function FormComment(): JSX.Element {
     }
   };
 
-  const disabled: boolean = !!(raiting && comment.length >= 50);
+  const disabled: boolean = !!(raiting && comment.length >= 50 && comment.length <= 300);
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleFormSubmit}>
@@ -77,3 +77,4 @@ function FormComment(): JSX.Element {
 }
 
 export default FormComment;
+

@@ -9,7 +9,7 @@ function SortingOptions(): JSX.Element {
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const activeClass = isOpen ? 'places__options--opened' : '';
-  const a = (key: PlacesSortType) => {
+  const handleSort = (key: PlacesSortType) => {
     dispatch(sortTypeAction(key));
     setIsOpen((state) => !state);
   };
@@ -34,7 +34,7 @@ function SortingOptions(): JSX.Element {
               sortType === key && 'places__option--active'
             }`}
             tabIndex={0}
-            onClick={() => a(key as PlacesSortType)}
+            onClick={() => handleSort(key as PlacesSortType)}
           >
             {sortOptions[key as PlacesSortType].name}
           </li>

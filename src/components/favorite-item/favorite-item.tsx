@@ -3,12 +3,12 @@ import { Offers } from '../../types/types-offers';
 import FavoriteButton from '../favorite-button/favorite-button';
 import { getDetailUrl } from '../../utils/get-detail-url';
 import { AppRoute } from '../../const';
-type Cities = {
+type CitiesProps = {
   cityName: string;
   cityList: Offers;
 };
 
-function FavoriteItem(props: Cities): JSX.Element {
+function FavoriteItem(props: CitiesProps): JSX.Element {
   const { cityName, cityList } = props;
 
   return (

@@ -15,10 +15,10 @@ function FavoriteButton({
   idItem,
 }: FavoriteButtonProps): JSX.Element {
   const navigate = useNavigate();
-  const auth = useAppSelector((state) => state.authorizationStatus);
+  const isAuth = useAppSelector((state) => state.authorizationStatus);
   const dispatch = useAppDispatch();
   const handleClick = () => {
-    if (auth === AuthorizationStatus.NoAuth) {
+    if (isAuth === AuthorizationStatus.NoAuth) {
       navigate(AppRoute.Login);
     } else {
       dispatch(changeFavorite({ id: idItem, status: Number(!isFavorite) }));

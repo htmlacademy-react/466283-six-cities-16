@@ -4,11 +4,11 @@ import { AppRoute } from '../../const';
 import { setLetterUpper } from '../../utils/set-letter-upper';
 import { calcRaiting } from '../../utils/calc-raiting';
 import FavoriteButton from '../favorite-button/favorite-button';
-type NearOffer = {
+type NearOfferProps = {
   nearOffer: Offer;
 };
 
-function NearOffer({ nearOffer }: NearOffer): JSX.Element {
+function NearOffer({ nearOffer }: NearOfferProps): JSX.Element {
   return (
     <article className="near-places__card place-card">
       <div className="near-places__image-wrapper place-card__image-wrapper">

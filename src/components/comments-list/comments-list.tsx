@@ -6,12 +6,12 @@ import { getDate } from '../../utils/get-date';
 import { sortComments } from '../../utils/sortComments';
 import FormComment from '../form-comment/form-comment';
 
-type F = {
+type CommntsProps = {
     dataComments:Comments;
 }
 
-function CommentsList({dataComments}: F):JSX.Element {
-  const auth = useAppSelector(
+function CommentsList({dataComments}: CommntsProps):JSX.Element {
+  const isAuth = useAppSelector(
     (state) => state.authorizationStatus
   );
   const sortedComments = [...dataComments].sort(sortComments).slice(0, 10);
@@ -53,7 +53,7 @@ function CommentsList({dataComments}: F):JSX.Element {
           </li>
         ))}
       </ul>
-      {auth === AuthorizationStatus.Auth && <FormComment />}
+      {isAuth === AuthorizationStatus.Auth && <FormComment />}
     </>
   );
 }
