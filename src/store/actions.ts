@@ -37,29 +37,41 @@ export const setError = createAction('setError', (value: null | string) => ({
   payload: value,
 }));
 
-export const commentsListAction = createAction('commentsList', (value: Comments) => ({
-  payload: value,
-}));
+export const commentsListAction = createAction(
+  'commentsList',
+  (value: Comments) => ({
+    payload: value,
+  })
+);
 
 export const setCommentsListAction = createAction<boolean>('setCommentsList');
 
-export const offersNearbyAction = createAction('offersNearby', (value: NearOffers) => ({
-  payload: value,
-}));
+export const offersNearbyAction = createAction(
+  'offersNearby',
+  (value: NearOffers) => ({
+    payload: value,
+  })
+);
 
 export const setOffersNearbyAction = createAction<boolean>('setOffersNearby');
 
-export const setCommentAction = createAction('setComment', (value: Comment) => ({
-  payload: value,
-}));
+export const setCommentAction = createAction(
+  'setComment',
+  (value: Comment) => ({
+    payload: value,
+  })
+);
 
 export const setEmailAction = createAction('setEmail', (value: userInfo) => ({
   payload: value,
 }));
 
-export const changeFavoriteStatusAction = createAction('changeFavoriteStatus', (value) => ({
-  payload: value,
-}));
+export const changeFavoriteStatusAction = createAction(
+  'changeFavoriteStatus',
+  (value) => ({
+    payload: value,
+  })
+);
 
 export const updateOfferAction = createAction('updateOfferAction', (value) => ({
   payload: value,

@@ -17,6 +17,7 @@ import {
   setEmailAction,
   changeFavoriteStatusAction,
   updateOfferAction,
+  updateDetailOfferAction,
 } from './actions';
 import { AuthorizationStatus, DEFAULT_CITY } from '../const';
 import { DetailOffer, Offers } from '../types/types-offers';
@@ -55,7 +56,7 @@ const initialState: InitialState = {
   isOffersNearby: true,
   userInfo: {
     email: '',
-    avatar: ''
+    avatar: '',
   },
   favorites: [],
 };
@@ -98,11 +99,11 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setError, (state, action) => {
       state.error = action.payload;
     })
-  //получение комментариев
+    //получение комментариев
     .addCase(commentsListAction, (state, action) => {
       state.comments = action.payload;
     })
-  //проверка загрузки комментариев
+    //проверка загрузки комментариев
     .addCase(setCommentsListAction, (state, action: PayloadAction<boolean>) => {
       state.isCommentsAction = action.payload;
     })
@@ -122,14 +123,34 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setEmailAction, (state, action: PayloadAction<userInfo>) => {
       state.userInfo = action.payload;
     })
-    .addCase(changeFavoriteStatusAction, (state, action: PayloadAction<DetailOffer>) => {
-      if (action.payload.isFavorite) {
-        state.favorites = [...state.favorites, action.payload];
-      } else {
-        state.favorites = state.favorites.filter((favoriteOffer) => favoriteOffer.id !== action.payload.id);
+    .addCase(
+      changeFavoriteStatusAction,
+      (state, action: PayloadAction<DetailOffer>) => {
+        if (action.payload.isFavorite) {
+          state.favorites = [...state.favorites, action.payload];
+        } else {
+          state.favorites = state.favorites.filter(
+            (favoriteOffer) => favoriteOffer.id !== action.payload.id
+          );
+        }
       }
-    })
+    )
     .addCase(updateOfferAction, (state, action) => {
-      state.offersList = state.offersList.map((offer) => (offer.id === action.payload ? {...offer, isFavorite: !offer?.isFavorite} : offer));
+      state.offersList = state.offersList.map((offer) =>
+        offer.id === action.payload
+          ? { ...offer, isFavorite: !offer?.isFavorite }
+          : offer
+      );
+      state.offerDetail =
+        state.offerDetail?.id === action.payload
+          ? { ...state.offerDetail, isFavorite: !state.offerDetail?.isFavorite }
+          : state.offerDetail;
+      if (state.offersNearby.length) {
+        state.offersNearby = state.offersNearby.map((offer) =>
+          offer.id === action.payload
+            ? { ...offer, isFavorite: !offer?.isFavorite }
+            : offer
+        );
+      }
     });
 });

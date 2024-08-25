@@ -1,11 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import {
-  AppDispatch,
-  State,
-  AuthData,
-  UserData,
-  Id,
-} from '../types/state';
+import { AppDispatch, State, AuthData, UserData, Id } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { Offers, DetailOffer } from '../types/types-offers';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
@@ -93,7 +87,7 @@ export const logIn = createAsyncThunk<
   } = await api.post<UserData>(APIRoute.Login, { email, password });
 
   saveToken(token);
-  dispatch(setEmailAction({email: email, avatar: avatarUrl}));
+  dispatch(setEmailAction({ email: email, avatar: avatarUrl }));
   dispatch(requireAuthorizationAction(AuthorizationStatus.Auth));
 });
 
@@ -149,12 +143,12 @@ export const fetchOffersNearby = createAsyncThunk<
 //отправка комментария
 type ShortComment = {
   comment: string;
-    rating: number;
-}
+  rating: number;
+};
 type AddForm = {
   id: string;
   comment: ShortComment;
-}
+};
 
 export const sendComment = createAsyncThunk<
   void,
@@ -164,15 +158,18 @@ export const sendComment = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('sendComment', async ({id, comment}, { dispatch, extra: api }) => {
-  const { data } = await api.post<Comment>(`${APIRoute.Comments}/${id}`, comment);
+>('sendComment', async ({ id, comment }, { dispatch, extra: api }) => {
+  const { data } = await api.post<Comment>(
+    `${APIRoute.Comments}/${id}`,
+    comment
+  );
   dispatch(setCommentAction(data));
 });
 
 type Status = {
   id: string;
   status: number;
-}
+};
 //добавление/удаление из избранного
 export const changeFavorite = createAsyncThunk<
   void,
@@ -182,9 +179,10 @@ export const changeFavorite = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('changeFavorite', async ({id, status}, { dispatch, extra: api }) => {
-  const { data } = await api.post<DetailOffer>(`${APIRoute.Favorite}/${id}/${status}`);
+>('changeFavorite', async ({ id, status }, { dispatch, extra: api }) => {
+  const { data } = await api.post<DetailOffer>(
+    `${APIRoute.Favorite}/${id}/${status}`
+  );
   dispatch(changeFavoriteStatusAction(data));
   dispatch(updateOfferAction(id));
 });
-
