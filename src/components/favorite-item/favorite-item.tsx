@@ -3,6 +3,8 @@ import { Offers } from '../../types/types-offers';
 import FavoriteButton from '../favorite-button/favorite-button';
 import { getDetailUrl } from '../../utils/get-detail-url';
 import { AppRoute } from '../../const';
+import { calcRaiting } from '../../utils/calc-raiting';
+import { setLetterUpper } from '../../utils/set-letter-upper';
 type CitiesProps = {
   cityName: string;
   cityList: Offers;
@@ -54,7 +56,10 @@ function FavoriteItem(props: CitiesProps): JSX.Element {
               </div>
               <div className="place-card__rating rating">
                 <div className="place-card__stars rating__stars">
-                  <span style={{ width: '100%' }}></span>
+                  <span style={{
+                    width: `${calcRaiting(cityItem.rating)}%`,
+                  }}
+                  />
                   <span className="visually-hidden">Rating</span>
                 </div>
               </div>
@@ -63,7 +68,7 @@ function FavoriteItem(props: CitiesProps): JSX.Element {
                   {cityItem.title}
                 </Link>
               </h2>
-              <p className="place-card__type">{cityItem.type}</p>
+              <p className="place-card__type">{setLetterUpper(cityItem.type)}</p>
             </div>
           </article>
         ))}

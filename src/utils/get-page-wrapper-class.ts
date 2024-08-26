@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { AppRoute } from '../const';
-export const PageWrapperClass = (): string => {
+export const GetPageWrapperClass = (): string => {
   const location = useLocation();
   let wrapperClass: string = '';
   switch (location?.pathname) {

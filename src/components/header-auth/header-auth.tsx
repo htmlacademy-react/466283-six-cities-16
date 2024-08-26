@@ -3,6 +3,7 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logOut } from '../../store/api-actions';
 import { DetailOffer } from '../../types/types-offers';
+import { clearOffersAction } from '../../store/actions';
 
 function HeaderAuth(): JSX.Element {
   const authorizationStatus = useAppSelector(
@@ -41,6 +42,7 @@ function HeaderAuth(): JSX.Element {
               onClick={(evt) => {
                 evt.preventDefault();
                 dispatch(logOut());
+                dispatch(clearOffersAction());
               }}
             >
               <div className="header__avatar-wrapper user__avatar-wrapper"></div>

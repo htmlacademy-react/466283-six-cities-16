@@ -68,11 +68,14 @@ export const setEmailAction = createAction('setEmail', (value: userInfo) => ({
 
 export const changeFavoriteStatusAction = createAction(
   'changeFavoriteStatus',
-  (value) => ({
+  (value: DetailOffer) => ({
     payload: value,
   })
 );
 
-export const updateOfferAction = createAction('updateOfferAction', (value) => ({
+export const updateOfferAction = createAction('updateOfferAction', (value:string) => ({
   payload: value,
 }));
+
+export const clearOffersAction = createAction('clearOffers');
+export const resetOffersAction = createAction('resetOffers');

@@ -3,7 +3,7 @@ import { useAppSelector } from '../../hooks';
 import { Comments } from '../../types/types-comments';
 import { calcRaiting } from '../../utils/calc-raiting';
 import { getDate } from '../../utils/get-date';
-import { sortComments } from '../../utils/sortComments';
+import { sortComments } from '../../utils/sort-comments';
 import FormComment from '../form-comment/form-comment';
 
 type CommntsProps = {

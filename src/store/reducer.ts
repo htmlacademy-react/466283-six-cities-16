@@ -17,6 +17,7 @@ import {
   setEmailAction,
   changeFavoriteStatusAction,
   updateOfferAction,
+  clearOffersAction,
 } from './actions';
 import { AuthorizationStatus, DEFAULT_CITY } from '../const';
 import { DetailOffer, Offers } from '../types/types-offers';
@@ -146,12 +147,21 @@ export const reducer = createReducer(initialState, (builder) => {
           ? { ...state.offerDetail, isFavorite: !state.offerDetail?.isFavorite }
           : state.offerDetail;
       }
-      if (state.offersNearby.length) {
+      if (state.offersNearby) {
         state.offersNearby = state.offersNearby.map((offer) =>
           offer.id === action.payload
             ? { ...offer, isFavorite: !offer?.isFavorite }
             : offer
         );
+      }
+    })
+    .addCase(clearOffersAction, (state) => {
+      state.offersList = state.offersList.map((offer) => ({...offer, isFavorite: false}));
+      if(state.offerDetail) {
+        state.offerDetail = {...state.offerDetail, isFavorite: false};
+      }
+      if (state.offersNearby) {
+        state.offersNearby = state.offersNearby.map((offerNearby) => ({...offerNearby, isFavorite: false}));
       }
     });
 });
