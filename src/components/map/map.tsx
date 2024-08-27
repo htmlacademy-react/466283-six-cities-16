@@ -50,6 +50,9 @@ function Map({ city, points, selectedOffer }: MapProps) {
           )
           .addTo(map);
       });
+      return () => {
+        map.removeLayer(markerLayer);
+      };
     }
   }, [map, points, selectedOffer, city]);
 

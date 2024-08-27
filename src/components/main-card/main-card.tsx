@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { setLetterUpper } from '../../utils/set-letter-upper';
 import FavoriteButton from '../favorite-button/favorite-button';
+import { calcRaiting } from '../../utils/calc-raiting';
 type OffersList = {
   offer: Offer;
   onHover?: (newOffer: Offer | null) => void;
@@ -49,7 +50,10 @@ function MainCard({ offer, onHover }: OffersList): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }}></span>
+            <span style={{
+              width: `${calcRaiting(offer.rating)}%`,
+            }}
+            />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
