@@ -125,7 +125,6 @@ export const logIn = createAsyncThunk<
   saveToken(token);
   dispatch(setEmailAction({ email: email, avatar: avatarUrl }));
   dispatch(requireAuthorizationAction(AuthorizationStatus.Auth));
-  dispatch(fetchFavorites());
   dispatch(updateReauthAction());
 });
 

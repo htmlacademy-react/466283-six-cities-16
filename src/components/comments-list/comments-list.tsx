@@ -1,4 +1,4 @@
-import { AuthorizationStatus } from '../../const';
+import { AuthorizationStatus, Numbers } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { Comments } from '../../types/types-comments';
 import { calcRaiting } from '../../utils/calc-raiting';
@@ -14,7 +14,7 @@ function CommentsList({dataComments}: CommntsProps):JSX.Element {
   const isAuth = useAppSelector(
     (state) => state.authorizationStatus
   );
-  const sortedComments = [...dataComments].sort(sortComments).slice(0, 10);
+  const sortedComments = [...dataComments].sort(sortComments).slice(Numbers.Zero, Numbers.Ten);
   return (
     <>
       <ul className="reviews__list">

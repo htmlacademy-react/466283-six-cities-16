@@ -3,7 +3,7 @@ import { DetailOffer } from '../../types/types-offers';
 import { calcRaiting } from '../../utils/calc-raiting';
 import { setLetterUpper } from '../../utils/set-letter-upper';
 import { getCountDataOffer } from '../../utils/get-count-data-offer';
-import { PRO_ACC, AppRoute } from '../../const';
+import { PRO_ACC, AppRoute, Numbers } from '../../const';
 import NearOffer from '../../components/near-offer/near-offer';
 import Map from '../../components/map/map';
 import { City } from '../../types/cities';
@@ -52,7 +52,7 @@ function Offer(): JSX.Element {
   if (!dataDetailOffer) {
     return <Navigate to={AppRoute.NotFound} replace />;
   }
-  const slicedNearOffers = dataNearOffers.slice(0, 3);
+  const slicedNearOffers = dataNearOffers.slice(Numbers.Zero, Numbers.Three);
   const mapOffers = [...slicedNearOffers, dataDetailOffer];
   return (
     <main className="page__main page__main--offer">
@@ -163,7 +163,7 @@ function Offer(): JSX.Element {
             Other places in the neighbourhood
           </h2>
           <div className="near-places__list places__list">
-            {slicedNearOffers.slice(0, 3).map((nearOffer) => (
+            {slicedNearOffers.slice(Numbers.Zero, Numbers.Three).map((nearOffer) => (
               <NearOffer key={nearOffer.id} nearOffer={nearOffer} />
             ))}
           </div>

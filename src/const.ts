@@ -37,14 +37,7 @@ export const MONTHS: string[] = [
   'November',
 ];
 
-type Cities = {
-  [key: string]: {
-    name: string;
-    latitude: number;
-    longitude: number;
-    zoom: number;
-  };
-};
+
 export const DEFAULT_CITY = 'Paris';
 export const CITIES: Cities = {
   Paris: {
@@ -99,6 +92,7 @@ export enum UrlMapMarker {
   Active = '../img/pin-active.svg',
 }
 
+import { Cities } from './types/cities';
 import { PlacesOption } from './types/sorting-options';
 
 export const sortOptions: Record<string, PlacesOption> = {
@@ -129,3 +123,14 @@ export enum APIRoute {
 }
 
 export const TIMEOUT_SHOW_ERROR = 2000;
+
+export enum Numbers {
+  Zero = 0,
+  Three = 3,
+  Ten = 10,
+}
+
+export enum CommentLength {
+  MinLength = 50,
+  MaxLength = 300,
+}
