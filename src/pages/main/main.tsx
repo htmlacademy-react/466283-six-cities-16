@@ -2,7 +2,7 @@ import MainCard from '../../components/main-card/main-card';
 import NavList from '../../components/nav-list/nav-list';
 import Map from '../../components/map/map';
 import { CITIES, sortOptions } from '../../const';
-import { Offers, Offer } from '../../types/types-offers';
+import { Offers, Offer, DetailOffer } from '../../types/types-offers';
 import { useState } from 'react';
 import MainEmpty from '../main-empty/main-empty';
 import { useAppSelector } from '../../hooks';
@@ -12,7 +12,7 @@ function Main(): JSX.Element {
   const selectedCity: string = useAppSelector((state) => state.city);
   const offers: Offers = useAppSelector((state) => state.offersList);
   const sortingType = useAppSelector((state) => state.sortType);
-  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
+  const [selectedOffer, setSelectedOffer] = useState<Offer | null | DetailOffer>(null);
   const [city, setCity] = useState(selectedCity);
   const cityOffers = offers
     .filter((offer) => offer.city.name === city)
@@ -21,6 +21,7 @@ function Main(): JSX.Element {
   const handleHover = (newOffer: Offer | null) => {
     setSelectedOffer(newOffer);
   };
+
   return (
     <main className={`page__main page__main--index  ${isEmptyOffers}`}>
       <h1 className="visually-hidden">Cities</h1>
@@ -54,7 +55,7 @@ function Main(): JSX.Element {
                 <Map
                   city={CITIES[city]}
                   points={offers}
-                  selectedOffer={selectedOffer}
+                  selectedOffer={selectedOffer as Offer}
                 />
               </section>
             </div>

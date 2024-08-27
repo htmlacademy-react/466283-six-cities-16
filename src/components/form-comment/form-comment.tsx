@@ -1,8 +1,15 @@
 import { useState } from 'react';
+import { store } from '../../store';
+import { sendComment } from '../../store/api-actions';
+import { useAppSelector } from '../../hooks';
+import { Ratings } from '../../const';
+import RatingStars from '../stars-raiting/stars-raiting';
 function FormComment(): JSX.Element {
-  const [, setRating] = useState(0);
-  const [, setComment] = useState('');
-
+  const [raiting, setRating] = useState(0);
+  const [comment, setComment] = useState('');
+  const idDetail = useAppSelector(
+    (state) => state.offerDetail?.id
+  );
   const getComment = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(event.target.value);
   };
@@ -11,101 +18,37 @@ function FormComment(): JSX.Element {
       setRating(Number(event.target.value));
     }
   };
+  const handleClear = () => {
+    setComment('');
+    setRating(0);
+  };
+
+  const handleFormSubmit = (evt: React.SyntheticEvent) => {
+    evt.preventDefault();
+    if(idDetail) {
+      store.dispatch(sendComment({id: idDetail, comment: {comment: comment, rating: raiting}}));
+      handleClear();
+    }
+  };
+
+  const disabled: boolean = !!(raiting && comment.length >= 50 && comment.length <= 300);
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleFormSubmit}>
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
-        <input
-          onChange={getRaitung}
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="5"
-          id="5-stars"
-          type="radio"
-        />
-        <label
-          htmlFor="5-stars"
-          className="reviews__rating-label form__rating-label"
-          title="perfect"
-        >
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          onChange={getRaitung}
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="4"
-          id="4-stars"
-          type="radio"
-        />
-        <label
-          htmlFor="4-stars"
-          className="reviews__rating-label form__rating-label"
-          title="good"
-        >
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          onChange={getRaitung}
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="3"
-          id="3-stars"
-          type="radio"
-        />
-        <label
-          htmlFor="3-stars"
-          className="reviews__rating-label form__rating-label"
-          title="not bad"
-        >
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          onChange={getRaitung}
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="2"
-          id="2-stars"
-          type="radio"
-        />
-        <label
-          htmlFor="2-stars"
-          className="reviews__rating-label form__rating-label"
-          title="badly"
-        >
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          onChange={getRaitung}
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="1"
-          id="1-star"
-          type="radio"
-        />
-        <label
-          htmlFor="1-star"
-          className="reviews__rating-label form__rating-label"
-          title="terribly"
-        >
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
+        {Ratings.map(({ value, title }) =>
+          (
+            <RatingStars
+              key={value}
+              value={value}
+              isChecked={value === raiting}
+              title={title}
+              getRaitung={getRaitung}
+            />
+          ))}
       </div>
       <textarea
         onChange={getComment}
@@ -113,6 +56,7 @@ function FormComment(): JSX.Element {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
+        value={comment}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -123,7 +67,7 @@ function FormComment(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled = {!disabled}
         >
           Submit
         </button>
@@ -133,3 +77,4 @@ function FormComment(): JSX.Element {
 }
 
 export default FormComment;
+

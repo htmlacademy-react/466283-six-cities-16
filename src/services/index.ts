@@ -7,14 +7,8 @@ import axios, {
 import { getToken } from './token';
 import { StatusCodes } from 'http-status-codes';
 import { processErrorHandle } from './process-error-handle';
-
-const URL_API = 'https://16.design.htmlacademy.pro/six-cities';
-const REQUEST_TIME = 5000;
-
-type DetailMessageType = {
-  type: string;
-  message: string;
-};
+import { REQUEST_TIME, URL_API } from '../const';
+import { DetailMessageType } from '../types/error';
 
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,

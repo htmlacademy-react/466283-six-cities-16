@@ -12,6 +12,14 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export const Ratings = [
+  { value: 5, title: 'perfect' },
+  { value: 4, title: 'good' },
+  { value: 3, title: 'not bad' },
+  { value: 2, title: 'badly' },
+  { value: 1, title: 'terribly' },
+];
+
 export const FAVORITE_BUTTON: string = 'place-card__bookmark-button--active';
 export const PRO_ACC: string = 'offer__avatar-wrapper--pro';
 
@@ -29,14 +37,7 @@ export const MONTHS: string[] = [
   'November',
 ];
 
-type Cities = {
-  [key: string]: {
-    name: string;
-    latitude: number;
-    longitude: number;
-    zoom: number;
-  };
-};
+
 export const DEFAULT_CITY = 'Paris';
 export const CITIES: Cities = {
   Paris: {
@@ -91,6 +92,7 @@ export enum UrlMapMarker {
   Active = '../img/pin-active.svg',
 }
 
+import { Cities } from './types/cities';
 import { PlacesOption } from './types/sorting-options';
 
 export const sortOptions: Record<string, PlacesOption> = {
@@ -121,3 +123,17 @@ export enum APIRoute {
 }
 
 export const TIMEOUT_SHOW_ERROR = 2000;
+
+export enum Numbers {
+  Zero = 0,
+  Three = 3,
+  Ten = 10,
+}
+
+export enum CommentLength {
+  MinLength = 50,
+  MaxLength = 300,
+}
+
+export const URL_API = 'https://16.design.htmlacademy.pro/six-cities';
+export const REQUEST_TIME = 5000;

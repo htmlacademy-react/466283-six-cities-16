@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router-dom';
 import Header from '../header/header';
-import { PageWrapperClass } from '../../utils/page-wrapper-class';
+import { GetPageWrapperClass } from '../../utils/get-page-wrapper-class';
 
 function Layout(): JSX.Element {
   return (
-    <div className={`page ${PageWrapperClass()}`}>
+    <div className={`page ${GetPageWrapperClass()}`}>
       <Header />
       <Outlet />
     </div>

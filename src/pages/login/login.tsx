@@ -50,6 +50,7 @@ function Login(): JSX.Element {
                 className="login__input form__input"
                 type="password"
                 name="password"
+                pattern="^(?=.*[a-zA-Z])(?=.*\d).*$"
                 placeholder="Password"
                 required
                 ref={passwordRef}

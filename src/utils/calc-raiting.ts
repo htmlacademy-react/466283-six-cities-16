@@ -1,1 +1,1 @@
-export const calcRaiting = (raiting: number) => (100 * raiting) / 5;
+export const calcRaiting = (raiting: number) => Math.round(raiting) * 100 / 5;

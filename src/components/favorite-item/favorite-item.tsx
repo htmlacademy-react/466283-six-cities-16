@@ -3,21 +3,23 @@ import { Offers } from '../../types/types-offers';
 import FavoriteButton from '../favorite-button/favorite-button';
 import { getDetailUrl } from '../../utils/get-detail-url';
 import { AppRoute } from '../../const';
-type Cities = {
+import { calcRaiting } from '../../utils/calc-raiting';
+import { setLetterUpper } from '../../utils/set-letter-upper';
+type CitiesProps = {
   cityName: string;
   cityList: Offers;
 };
 
-function FavoriteItem(props: Cities): JSX.Element {
+function FavoriteItem(props: CitiesProps): JSX.Element {
   const { cityName, cityList } = props;
 
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
-          <a className="locations__item-link" href="#">
+          <Link className="locations__item-link" to={AppRoute.Root}>
             <span>{cityName}</span>
-          </a>
+          </Link>
         </div>
       </div>
       <div className="favorites__places">
@@ -50,11 +52,14 @@ function FavoriteItem(props: Cities): JSX.Element {
                     &#47;&nbsp;night
                   </span>
                 </div>
-                <FavoriteButton buttonActive={cityItem.isFavorite} />
+                <FavoriteButton idItem={cityItem.id} isFavorite={cityItem.isFavorite} className='place-card' />
               </div>
               <div className="place-card__rating rating">
                 <div className="place-card__stars rating__stars">
-                  <span style={{ width: '100%' }}></span>
+                  <span style={{
+                    width: `${calcRaiting(cityItem.rating)}%`,
+                  }}
+                  />
                   <span className="visually-hidden">Rating</span>
                 </div>
               </div>
@@ -63,7 +68,7 @@ function FavoriteItem(props: Cities): JSX.Element {
                   {cityItem.title}
                 </Link>
               </h2>
-              <p className="place-card__type">{cityItem.type}</p>
+              <p className="place-card__type">{setLetterUpper(cityItem.type)}</p>
             </div>
           </article>
         ))}

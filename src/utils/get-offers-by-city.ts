@@ -1,8 +1,4 @@
-import { Offers } from '../types/types-offers';
-
-type FavoritesList = {
-  [key: string]: Offers;
-};
+import { FavoritesList, Offers } from '../types/types-offers';
 
 export const getOffersByCity = (favoriteOffers: Offers) => {
   const favoriteOffersByCity: FavoritesList = {};

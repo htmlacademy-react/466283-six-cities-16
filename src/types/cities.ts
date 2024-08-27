@@ -12,3 +12,12 @@ export type City = {
   name: string;
   zoom: number;
 };
+
+export type Cities = {
+  [key: string]: {
+    name: string;
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
+};

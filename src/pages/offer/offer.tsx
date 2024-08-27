@@ -1,39 +1,59 @@
 import { Navigate, useParams } from 'react-router-dom';
-import { detailOffers } from '../../mocks/detail-offers';
-import { comments } from '../../mocks/comments';
 import { DetailOffer } from '../../types/types-offers';
-import { Comments } from '../../types/types-comments';
 import { calcRaiting } from '../../utils/calc-raiting';
-import { getDataDetailOffer } from '../../utils/get-data-detail-offer';
-import { getDataComments } from '../../utils/get-data-comments';
-import { getDate } from '../../utils/get-date';
 import { setLetterUpper } from '../../utils/set-letter-upper';
 import { getCountDataOffer } from '../../utils/get-count-data-offer';
-import { PRO_ACC, AppRoute } from '../../const';
-import FormComment from '../../components/form-comment/form-comment';
+import { PRO_ACC, AppRoute, Numbers } from '../../const';
 import NearOffer from '../../components/near-offer/near-offer';
-import { nearOffers } from '../../mocks/near-offer';
-import { NearOffers } from '../../types/near-offers';
-import { getDataNearOffers } from '../../utils/get-data-near-offers';
 import Map from '../../components/map/map';
 import { City } from '../../types/cities';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import Loader from '../../components/loader/loader';
+import { useEffect } from 'react';
+import { fetchComments, fetchOfferDetailAction, fetchOffersNearby } from '../../store/api-actions';
+import FavoriteButton from '../../components/favorite-button/favorite-button';
+import CommentsList from '../../components/comments-list/comments-list';
 
 function Offer(): JSX.Element {
-  const { id } = useParams();
-  const dataDetailOffer: DetailOffer | undefined = getDataDetailOffer(
-    id,
-    detailOffers
+  const {id} = useParams();
+  const dataDetailOffer: DetailOffer | null = useAppSelector(
+    (state) => state.offerDetail
   );
-  const dataNearOffers: NearOffers | undefined = getDataNearOffers(
-    id,
-    nearOffers
+
+  const isOfferDetailAction = useAppSelector(
+    (state) => state.isOfferDetailAction
   );
+  const dataComments = useAppSelector(
+    (state) => state.comments
+  );
+  const iaDataComments = useAppSelector(
+    (state) => state.isCommentsAction
+  );
+  const dataNearOffers = useAppSelector(
+    (state) => state.offersNearby
+  );
+  const iaDataNearOffers = useAppSelector(
+    (state) => state.isOffersNearby
+  );
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchOfferDetailAction(id as string));
+    dispatch(fetchComments(id as string));
+    dispatch(fetchOffersNearby(id as string));
+  }, [dispatch, id]);
+
+
+  if (isOfferDetailAction || iaDataComments || iaDataNearOffers) {
+    return <Loader />;
+  }
   const acriveClassAcc: string = dataDetailOffer?.host.isPro ? PRO_ACC : '';
-  const dataComments: Comments | undefined = getDataComments(id, comments);
 
   if (!dataDetailOffer) {
     return <Navigate to={AppRoute.NotFound} replace />;
   }
+  const slicedNearOffers = dataNearOffers.slice(Numbers.Zero, Numbers.Three);
+  const mapOffers = [...slicedNearOffers, dataDetailOffer];
   return (
     <main className="page__main page__main--offer">
       <section className="offer">
@@ -54,13 +74,8 @@ function Offer(): JSX.Element {
               </div>
             )}
             <div className="offer__name-wrapper">
-              <h1 className="offer__name">{dataDetailOffer.title}</h1>
-              <button className="offer__bookmark-button button" type="button">
-                <svg className="offer__bookmark-icon" width="31" height="33">
-                  <use xlinkHref="#icon-bookmark"></use>
-                </svg>
-                <span className="visually-hidden">To bookmarks</span>
-              </button>
+              <h1 className="offer__name">{dataDetailOffer?.title}</h1>
+              <FavoriteButton idItem={dataDetailOffer.id} isFavorite={dataDetailOffer.isFavorite} className='offer'/>
             </div>
             <div className="offer__rating rating">
               <div className="offer__stars rating__stars">
@@ -70,7 +85,7 @@ function Offer(): JSX.Element {
                 <span className="visually-hidden">Rating</span>
               </div>
               <span className="offer__rating-value rating__value">
-                {dataDetailOffer.rating}
+                {dataDetailOffer?.rating}
               </span>
             </div>
             <ul className="offer__features">
@@ -125,57 +140,20 @@ function Offer(): JSX.Element {
                 <p className="offer__text">{dataDetailOffer.description}</p>
               </div>
             </div>
-            {dataComments.length && (
-              <section className="offer__reviews reviews">
-                <h2 className="reviews__title">
+            <section className="offer__reviews reviews">
+              <h2 className="reviews__title">
                   Reviews &middot;{' '}
-                  <span className="reviews__amount">{dataComments.length}</span>
-                </h2>
-                <ul className="reviews__list">
-                  {dataComments.map((commentItem) => (
-                    <li key={commentItem.id} className="reviews__item">
-                      <div className="reviews__user user">
-                        <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                          <img
-                            className="reviews__avatar user__avatar"
-                            src={commentItem.user.avatarUrl}
-                            width="54"
-                            height="54"
-                            alt="Reviews avatar"
-                          />
-                        </div>
-                        <span className="reviews__user-name">
-                          {commentItem.user.name}
-                        </span>
-                      </div>
-                      <div className="reviews__info">
-                        <div className="reviews__rating rating">
-                          <div className="reviews__stars rating__stars">
-                            <span
-                              style={{
-                                width: `${calcRaiting(commentItem.rating)}%`,
-                              }}
-                            />
-                            <span className="visually-hidden">Rating</span>
-                          </div>
-                        </div>
-                        <p className="reviews__text">{commentItem.comment}</p>
-                        <time className="reviews__time" dateTime="2019-04-24">
-                          {getDate(commentItem.date)}
-                        </time>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-                <FormComment />
-              </section>
-            )}
+                <span className="reviews__amount">{dataComments.length}</span>
+              </h2>
+              <CommentsList dataComments={dataComments} />
+            </section>
           </div>
         </div>
         <section className="offer__map map">
           <Map
             city={dataDetailOffer.city.location as City}
-            points={dataNearOffers}
+            points={mapOffers }
+            selectedOffer ={dataDetailOffer}
           />
         </section>
       </section>
@@ -185,7 +163,7 @@ function Offer(): JSX.Element {
             Other places in the neighbourhood
           </h2>
           <div className="near-places__list places__list">
-            {dataNearOffers.slice(0, 3).map((nearOffer) => (
+            {slicedNearOffers.slice(Numbers.Zero, Numbers.Three).map((nearOffer) => (
               <NearOffer key={nearOffer.id} nearOffer={nearOffer} />
             ))}
           </div>
