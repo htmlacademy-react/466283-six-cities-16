@@ -134,3 +134,6 @@ export enum CommentLength {
   MinLength = 50,
   MaxLength = 300,
 }
+
+export const URL_API = 'https://16.design.htmlacademy.pro/six-cities';
+export const REQUEST_TIME = 5000;

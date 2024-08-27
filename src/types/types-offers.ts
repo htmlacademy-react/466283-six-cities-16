@@ -38,3 +38,7 @@ export type DetailOffer = Offer & {
 };
 
 export type DetailOffers = DetailOffer[];
+
+export type FavoritesList = {
+  [key: string]: Offers;
+};
