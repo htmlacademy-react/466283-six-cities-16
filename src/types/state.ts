@@ -17,3 +17,8 @@ export type UserData = {
 };
 
 export type Id = string;
+
+export type Status = {
+  id: string;
+  status: number;
+};

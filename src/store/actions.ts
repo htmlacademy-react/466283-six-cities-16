@@ -79,3 +79,11 @@ export const updateOfferAction = createAction('updateOfferAction', (value:string
 
 export const clearOffersAction = createAction('clearOffers');
 export const resetOffersAction = createAction('resetOffers');
+
+export const setFavoritesAction = createAction(
+  'setFavorites',
+  (value: DetailOffer[]) => ({
+    payload: value,
+  })
+);
+export const updateReauthAction = createAction('updateReauthAction');

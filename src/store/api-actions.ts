@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AppDispatch, State, AuthData, UserData, Id } from '../types/state';
+import { AppDispatch, State, AuthData, UserData, Id, Status } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { Offers, DetailOffer } from '../types/types-offers';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
@@ -18,11 +18,43 @@ import {
   setEmailAction,
   changeFavoriteStatusAction,
   updateOfferAction,
+  setFavoritesAction,
+  updateReauthAction,
 } from './actions';
 import { dropToken, saveToken } from '../services/token';
 import { store } from '.';
-import { Comments, Comment } from '../types/types-comments';
+import { Comments, Comment, AddForm } from '../types/types-comments';
 import { NearOffers } from '../types/near-offers';
+//добавление/удаление из избранного
+export const changeFavorite = createAsyncThunk<
+  void,
+  Status,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('changeFavorite', async ({ id, status }, { dispatch, extra: api }) => {
+  const { data } = await api.post<DetailOffer>(
+    `${APIRoute.Favorite}/${id}/${status}`
+  );
+  dispatch(changeFavoriteStatusAction(data));
+  dispatch(updateOfferAction(id));
+});
+
+export const fetchFavorites = createAsyncThunk<
+  void,
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('fetchFavorites', async (_arg, { dispatch, extra: api }) => {
+  const { data } = await api.get<DetailOffer[]>(APIRoute.Favorite);
+  dispatch(setFavoritesAction(data));
+});
+
 
 //запрос предложений
 export const fetchOffersAction = createAsyncThunk<
@@ -65,8 +97,12 @@ export const checkAuthAction = createAsyncThunk<
   }
 >('checkAuth', async (_arg, { dispatch, extra: api }) => {
   try {
-    await api.get(APIRoute.Login);
+    const {
+      data: { avatarUrl, email },
+    } = await api.get<UserData>(APIRoute.Login);
+    dispatch(setEmailAction({ email: email, avatar: avatarUrl }));
     dispatch(requireAuthorizationAction(AuthorizationStatus.Auth));
+    dispatch(fetchFavorites());
   } catch {
     dispatch(requireAuthorizationAction(AuthorizationStatus.NoAuth));
   }
@@ -89,6 +125,8 @@ export const logIn = createAsyncThunk<
   saveToken(token);
   dispatch(setEmailAction({ email: email, avatar: avatarUrl }));
   dispatch(requireAuthorizationAction(AuthorizationStatus.Auth));
+  dispatch(fetchFavorites());
+  dispatch(updateReauthAction());
 });
 
 //запрос на выход из личного кабинета
@@ -141,14 +179,7 @@ export const fetchOffersNearby = createAsyncThunk<
 });
 
 //отправка комментария
-type ShortComment = {
-  comment: string;
-  rating: number;
-};
-type AddForm = {
-  id: string;
-  comment: ShortComment;
-};
+
 
 export const sendComment = createAsyncThunk<
   void,
@@ -164,25 +195,4 @@ export const sendComment = createAsyncThunk<
     comment
   );
   dispatch(setCommentAction(data));
-});
-
-type Status = {
-  id: string;
-  status: number;
-};
-//добавление/удаление из избранного
-export const changeFavorite = createAsyncThunk<
-  void,
-  Status,
-  {
-    dispatch: AppDispatch;
-    state: State;
-    extra: AxiosInstance;
-  }
->('changeFavorite', async ({ id, status }, { dispatch, extra: api }) => {
-  const { data } = await api.post<DetailOffer>(
-    `${APIRoute.Favorite}/${id}/${status}`
-  );
-  dispatch(changeFavoriteStatusAction(data));
-  dispatch(updateOfferAction(id));
 });

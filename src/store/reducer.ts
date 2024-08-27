@@ -18,6 +18,8 @@ import {
   changeFavoriteStatusAction,
   updateOfferAction,
   clearOffersAction,
+  setFavoritesAction,
+  updateReauthAction,
 } from './actions';
 import { AuthorizationStatus, DEFAULT_CITY } from '../const';
 import { DetailOffer, Offers } from '../types/types-offers';
@@ -162,6 +164,24 @@ export const reducer = createReducer(initialState, (builder) => {
       }
       if (state.offersNearby) {
         state.offersNearby = state.offersNearby.map((offerNearby) => ({...offerNearby, isFavorite: false}));
+      }
+    })
+    .addCase(setFavoritesAction, (state, action) => {
+      state.favorites = action.payload;
+    })
+    .addCase(updateReauthAction, (state) => {
+      if(state.offersList) {
+        state.offersList = state.offersList.map((offer) => (
+          state.favorites.find((favorite) => favorite.id === offer.id) ? {...offer, isFavorite: true} : {...offer, isFavorite: false}
+        ));
+      }
+      if(state.offersNearby) {
+        state.offersNearby = state.offersNearby.map((offerNearby) => (
+          state.favorites.find((favorite) => favorite.id === offerNearby.id) ? {...offerNearby, isFavorite: true} : {...offerNearby, isFavorite: false}
+        ));
+      }
+      if(state.offerDetail) {
+        state.offerDetail = state.favorites.find((favorite) => favorite?.id === state.offerDetail?.id) ? {...state.offerDetail, isFavorite: true} : {...state.offerDetail, isFavorite: false};
       }
     });
 });
